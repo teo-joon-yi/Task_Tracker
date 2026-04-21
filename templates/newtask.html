@@ -8,7 +8,7 @@
       <input type="text" name="name">
       <p>Enter the description of the task:</p>
       <input type="text" name="description">
-      <p>Select people involved (hold ctrl/cmd)</p>
+      <p>Select people involved:</p>
         {% for person in data %} <!-- change var names later -->
         <label>
           <input type="checkbox" name="people" value="{{person}}">{{person}}
@@ -26,6 +26,8 @@
         <option value="Completed">Completed</option>
         <option value="Not Started">Not Started</option>
       </select>
+
+      <button type="submit"Submit></button>
         
     </form>
   </body>
