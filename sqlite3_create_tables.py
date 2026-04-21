@@ -9,7 +9,7 @@ Description TEXT,
 AssignedMember TEXT,
 CreatedBy TEXT,
 Priority TEXT,
-Status TEXT
+Status TEXT,
 
 PRIMARY KEY(Title)
 )''')
