@@ -1,1 +1,67 @@
+<!doctype html>
+<html>
+<head>
+	<title>Task Tracker</title>
+	<link rel="stylesheet" href="../static/home.css">
+</head>
 
+<body>
+	<div class="navbar-container">
+		<h1>Title</h1>
+		<form method="GET" action="search" class="navbar-search">
+			<input type="text" placeholder="Search for a task" name="search" class="navbar-search-input" required>
+			<input type="submit" class="navbar-search-submit" name="search-submit">
+		</form>
+	</div>
+	
+	<div class="body-container">
+		<div class = "sidebar-container">
+			<h3>People</h3>
+			<form>
+				{%for person in people%}
+				<input type="radio" id=person name="person-selected" value=person>
+				<label for=person>{{ person }}</label>
+				<br>
+				{%endfor%}
+				<input type="submit" id="person-submit" name="submit">
+			</form>
+			<h3>Status</h3>
+			<form>
+				<input type="radio" id="status-not-started" name="status-selected" value="Not Started">
+				<label for="status-not-started">Not Started</label>
+				<br>
+				<input type="radio" id="status-in-progress" name="status-selected" value="In Progress">
+				<label for="status-in-progress">In Progress</label>
+				<br>
+				<input type="radio" id="status-completed" name="status-selected" value="Completed">
+				<label for="status-completed">Completed</label>
+				<br>
+				<input type="submit" id="status-submit" name="submit">
+			</form>
+			<h3>Priority</h3>
+			<form>
+				<input type="radio" id="priority-low" name="priority-selected" value="Low">
+				<label for="priority-low">Low</label>
+				<br>
+				<input type="radio" id="priority-medium" name="priority-selected" value="Medium">
+				<label for="priority-medium">Medium</label>
+				<br>
+				<input type="radio" id="priority-high" name="priority-selected" value="High">
+				<label for="priority-high">High</label>
+				<br>
+				<input type="submit" id="priority-submit" name="submit">
+			</form>
+			<h3>Space</h3>
+			<h3>Space</h3>
+			<h3>Space</h3>
+		</div>
+		<div class="tasks-container">
+			{%for task in tasks%}
+				<div>
+					<h5>{{placeholder}}</h5>
+				</div>
+			{%endfor%}
+		</div>
+	</div>
+</body>
+</html>
