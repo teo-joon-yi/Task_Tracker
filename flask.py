@@ -74,6 +74,33 @@ app = Flask(__name__)
 @app.route('/',)
 def home():
     return render_template("home.html")
+    
+@app.route('/update/', methods=["POST"])
+def update():
+    
+    filter_by = request.form["filter_by"]    
+    filter_value = request.form["filter_value"]
+
+    
+    tasks = filter_task(filter_by, filter_value)
+
+    
+    status = request.form["status-selected"]
+    priority = request.form["priority-selected"]
+    person = request.form["person-selected"]
+
+    for task in tasks:
+        task_name = task[0]  
+
+        if status:
+            update_task(task_name, "Status", status)
+
+        elif priority:
+            update_task(task_name, "Priority", priority)
+
+        elif person:
+            update_task(task_name, "AssignedMember", person)
+    return render_template("home.html")
 
 
 @app.route('/newtask/', methods = ["POST", "GET"])
