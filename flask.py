@@ -61,6 +61,13 @@ def update_task(taskname, updateby, newvalue): #e.g. if we're updating status fr
     else:
         return False
     connection.close()
+    
+def delete_task(taskname):
+  connection = sqlite3.connect("tasks.db")
+  connection.execute('''DELETE FROM Tasks WHERE Title = ?''', (taskname,))
+  connection.commit()
+  connection.close()
+
 
 app = Flask(__name__)
 
