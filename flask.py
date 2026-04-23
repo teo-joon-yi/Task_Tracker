@@ -1,4 +1,66 @@
 from flask import Flask, render_template, request
+import sqlite3
+
+def insert_task(title, desc, assignedmember, createdby, status="In Progress", priority="Low"):
+    connection = sqlite3.connect("tasks.db")
+    try:
+        connection.execute('''INSERT INTO Tasks(Title, Description, AssignedMember, CreatedBy, Priority, Status)
+        VALUES(?,?,?,?,?,?)''', (title.strip().capitalize(), desc, assignedmember.strip().capitalize(), createdby.strip().capitalize(), priority, status))
+        connection.commit()
+        connection.close()
+        return True
+    except: #task already exists
+        return False
+
+
+def filter_task(filterby, value):
+    connection = sqlite3.connect("tasks.db")
+    if filterby=="Title":
+        cursor = connection.execute('''SELECT * FROM Tasks WHERE Title = ?''', (value,)).fetchall()
+    elif filterby=="Description":
+        cursor = connection.execute('''SELECT * FROM Tasks WHERE Description = ?''', (value,)).fetchall()
+    elif filterby == "AssignedMember":
+        cursor = connection.execute('''SELECT * FROM Tasks WHERE AssignedMember= ?''', (value,)).fetchall()
+    elif filterby == "CreatedBy":
+        cursor = connection.execute('''SELECT * FROM Tasks WHERE CreatedBy= ?''', (value,)).fetchall()
+    elif filterby == "Priority":
+        cursor = connection.execute('''SELECT * FROM Tasks WHERE Priority= ?''', (value,)).fetchall()
+    elif filterby == "Status":
+        cursor = connection.execute('''SELECT * FROM Tasks WHERE Status= ?''', (value,)).fetchall()
+    connection.close()
+    return cursor
+
+def update_task(taskname, updateby, newvalue): #e.g. if we're updating status from In Progress to complete the parameters shld be (taskname, "Status", "Complete")
+    connection = sqlite3.connect("tasks.db")
+    newvalue = newvalue.strip().capitalize()
+    
+    if updateby=="Title":
+        connection.execute('''UPDATE Tasks SET Title = ? WHERE Title = ?''', (newvalue, taskname))
+        connection.commit()
+        return True
+    elif updateby=="Description":
+        connection.execute('''UPDATE Tasks SET Description = ? WHERE Title = ?''', (newvalue, taskname))
+        connection.commit()
+        return True
+    elif updateby == "AssignedMember":
+        connection.execute('''UPDATE Tasks SET AssignedMember = ? WHERE Title = ?''', (newvalue, taskname))
+        connection.commit()
+        return True
+    elif updateby == "CreatedBy":
+        connection.execute('''UPDATE Tasks SET CreatedBy = ? WHERE Title = ?''', (newvalue, taskname))
+        connection.commit()
+        return True
+    elif updateby == "Priority":
+        connection.execute('''UPDATE Tasks SET Priority = ? WHERE Title = ?''', (newvalue, taskname))
+        connection.commit()
+        return True
+    elif updateby == "Status":
+        connection.execute('''UPDATE Tasks SET Status = ? WHERE Title = ?''', (newvalue, taskname))
+        connection.commit()
+        return True
+    else:
+        return False
+    connection.close()
 
 app = Flask(__name__)
 
