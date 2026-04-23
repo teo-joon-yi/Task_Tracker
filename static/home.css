@@ -11,7 +11,7 @@
 	top: 0%;
 	left: 0%;
 	
-	background: #eee;
+	background: #A7B899;
 }
 
 .body-container {
@@ -32,7 +32,7 @@
 	height: 85vh;
 	overflow-y: scroll;
 	
-	background: #ddd;
+	background: #EBF5DF;
 	padding: 1rem;
 	box-sizing: border-box;
 }
@@ -48,7 +48,7 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	
-	background: #fff;
+	background: rgb(248, 255, 250);
 	padding: 1rem;
 	box-sizing: border-box;
 }
@@ -65,4 +65,36 @@ h3 {
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+#person-submit{
+	margin-top: 20px;
+	background: rgb(200, 220, 180);
+	border: 1px solid grey;
+	border-radius: 3px;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+#status-submit{
+	margin-top: 20px;
+	background: rgb(200, 220, 180);
+	border: 1px solid grey;
+	border-radius: 3px;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-top: 2px;
+	padding-bottom: 2px
+}
+
+#priority-submit{
+	margin-top: 20px;
+	background: rgb(200, 220, 180);
+	border: 1px solid grey;
+	border-radius: 3px;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-top: 2px;
+	padding-bottom: 2px
 }
