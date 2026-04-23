@@ -6,6 +6,18 @@
 </head>
 
 <body>
+
+	<div id = "task-modal" class = "modal">
+		<div class = "task-modal-content">
+			<h2>Test</h2>
+			<form method = "POST" action = "test">
+				<input type = "text" name = "taskName" id = "taskNameDeleteForm" value="placeholder ID">
+				<input type = "submit" value = "Delete" class = "delete-submit">
+			</form>
+			<button id="task-modal-close-button" onclick="closeTaskDetails()">Close</button>
+			</div>
+	</div>
+	
 	<div class="navbar-container">
 		<h1>Title</h1>
 		<form method="GET" action="search" class="navbar-search">
@@ -65,4 +77,21 @@
 		</div>
 	</div>
 </body>
+	<script>
+	var taskDetailsModal = document.getElementById("task-modal")
+	
+	function openTaskDetails() {
+		taskDetailsModal.style.display = "block";
+	}
+		
+	function closeTaskDetails() {
+		taskDetailsModal.style.display = "none";
+	}
+	
+	window.onclick = function(event) {
+		if (event.target == taskDetailsModal) {
+			taskDetailsModal.style.display = "none";
+		}
+	}
+	</script>
 </html>
