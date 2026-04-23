@@ -28,7 +28,15 @@ def filter_task(filterby, value):
     elif filterby == "Status":
         cursor = connection.execute('''SELECT * FROM Tasks WHERE Status= ?''', (value,)).fetchall()
     connection.close()
-    return cursor
+    
+    filterlist = []
+    for tup in cursor:
+        tuplist = []
+        for item in tup:
+            tuplist.append(item)
+        filterlist.append(tuplist)
+    
+    return filterlist
 
 def update_task(taskname, updateby, newvalue): #e.g. if we're updating status from In Progress to complete the parameters shld be (taskname, "Status", "Complete")
     connection = sqlite3.connect("tasks.db")
