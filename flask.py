@@ -129,7 +129,11 @@ def home():
            cursor = filter_task("AssignedMember", person)
             return render_template("home.html", cursor = cursor)
 
-        elif 
+        elif taskname:
+            delete_task(taskname)
+            return render_template("home.html")
+
+            
             
 
         
