@@ -12,15 +12,17 @@ CreatedBy TEXT,
 Priority TEXT,
 Status TEXT,
 
-PRIMARY KEY(Title)
-FOREIGN KEY(AssignedMember) REFERENCES People(Name)
+PRIMARY KEY(Title),
+FOREIGN KEY(AssignedMember) REFERENCES People(Name),
 FOREIGN KEY(CreatedBy) REFERENCES People(Name)
 
 )''')
 
 #create people table
 connection.execute('''CREATE TABLE IF NOT EXISTS People(
-Name TEXT
+Name TEXT,
+
+PRIMARY KEY(Name)
 )''') #if we create a login feature can add password or smth
 
 connection.close()
@@ -29,6 +31,8 @@ def add_people(name):
     connection = sqlite3.connect("tasks.db")
     connection.execute('''INSERT INTO People(Name) VALUES(?)''', (name,))
     return True
+
+
 
 def insert_task(title, desc, assignedmember, createdby, status="In Progress", priority="Low"):
     connection = sqlite3.connect("tasks.db")
@@ -44,6 +48,8 @@ def insert_task(title, desc, assignedmember, createdby, status="In Progress", pr
 
 def filter_task(filterby, value):
     connection = sqlite3.connect("tasks.db")
+    value = value.strip().capitalize()
+    
     if filterby=="Title":
         cursor = connection.execute('''SELECT * FROM Tasks WHERE Title = ?''', (value,)).fetchall()
     elif filterby=="Description":
@@ -105,15 +111,28 @@ def delete_task(taskname):
   connection.commit()
   connection.close()
 
-add_people("Joon Yi")
-add_people("Rae Lynn")
-add_people("Deeksha")
-add_people("Josephine")
-add_people("Mr Lai")
+def people_list():
+    connection = sqlite3.connect("tasks.db")
+    cursor = connection.execute('''SELECT Name FROM People''').fetchall()
 
-insert_task("Buy ingredients", "buy flour, eggs and sugar", "Joon Yi", "Mr Lai")
-insert_task("Bake cookies", "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/ link to cookie recipe", "Rae Lynn", "Deeksha")
-insert_task("Clean up", "clean up workspace after baking cookies", "Josephine", "Mr Lai")
+    peoplelist = []
+    for item in cursor:
+        peoplelist.append(item[0])
+
+    return peoplelist
+
+try:
+    add_people("Joon Yi")
+    add_people("Rae Lynn")
+    add_people("Deeksha")
+    add_people("Josephine")
+    add_people("Mr Lai")
+    
+    insert_task("Buy ingredients", "buy flour, eggs and sugar", "Joon Yi", "Mr Lai")
+    insert_task("Bake cookies", "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/ link to cookie recipe", "Rae Lynn", "Deeksha")
+    insert_task("Clean up", "clean up workspace after baking cookies", "Josephine", "Mr Lai")
+except:
+    pass
 
 
 app = Flask(__name__)
@@ -141,7 +160,7 @@ def home():
             return render_template("home.html", cursor = cursor)
 
         elif person:
-           cursor = filter_task("AssignedMember", person)
+            cursor = filter_task("AssignedMember", person)
             return render_template("home.html", cursor = cursor)
 
         elif taskname:
