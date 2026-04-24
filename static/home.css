@@ -1,6 +1,23 @@
-.body {
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+:root {
+	--background-dark: hsl(96, 20%, 70%);
+	--background-middark: hsl(92, 32%, 78%);
+	--background-middle: hsl(88, 45%, 87%);
+	--background-light: hsl(84, 60%, 96%);
+	
+	--highlight: white;
+	--border: hsl(88, 40%, 40%);
+	--modal-background: hsla(88, 16%, 16%, 50%);
+	--text-colour: hsl(137, 28%, 18%);
+	--font: "DM Sans";
+}
+
+body {
 	width: 100vw;
 	height: 100vh;
+	font-family: var(--font) !important;
+	color: var(--text-colour);
 }
 
 .navbar-container {
@@ -16,7 +33,57 @@
 	top: 0%;
 	left: 0%;
 	
-	background: #A7B899;
+	background: var(--background-dark);
+}
+
+.navbar-search-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	align-items: center;
+}
+
+#navbar-search, #navbar-new-task {
+	margin: 0rem 2rem;
+}
+
+#navbar-search-input {
+	padding: 0.6rem;
+	margin: 0.2rem;
+	
+	background-color: var(--background-middark);
+	border: 2px solid var(--text-colour);
+	border-radius: 8px;
+	color: var(--text-colour);
+	outline: none;
+	font-size: 1rem;
+	transition: background 0.2s;
+}
+
+#navbar-search-input:focus {
+	background-color: var(--background-middle);
+}
+
+#navbar-search-submit, #navbar-new-task {
+	padding: 0.6rem;
+	
+	background-color: var(--background-middle);
+	border: 2px solid var(--border);
+	border-radius: 8px;
+	color: var(--text-colour);
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 1rem;
+	transition: background 0.2s;
+}
+
+#navbar-search-submit:hover, #navbar-new-task:hover {
+	background-color: var(--background-light);
+}
+
+::placeholder {
+	color: var(--text-colour);
+	opacity: 50%;
 }
 
 .body-container {
@@ -37,7 +104,7 @@
 	height: 85vh;
 	overflow-y: scroll;
 	
-	background: #EBF5DF;
+	background: var(--background-middle);
 	padding: 1rem;
 	box-sizing: border-box;
 }
@@ -54,7 +121,7 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	
-	background: rgb(248, 255, 250);
+	background: var(--background-light);
 	padding: 1rem;
 	box-sizing: border-box;
 }
@@ -66,10 +133,40 @@
 
 .task-filter {
 	width: 30%;
+	min-width: 240px;
 	height: 20%;
 	margin: 1rem;
-
 	display: none;
+	
+	background: var(--highlight);
+	border: 2px solid var(--border);
+	border-radius: 16px;
+	transition: transform 0.2s;
+}
+
+.task-filter:hover {
+	transform: scale(1.04);
+}
+
+.filter-button {
+	margin: 0.2rem 1.5rem;
+	padding: 0.4rem;
+	
+	background-color: var(--background-light);
+	border: none;
+	border-radius: 8px;
+	transition: background 0.2s, transform 0.2s;
+}
+
+.filter-button:hover {
+	background-color: var(--background-middark);
+	transform: scale(1.04);
+}
+
+.active {
+	font-weight: bold;
+	background-color: var(--background-middark) !important;
+	transform: scale(1.04);
 }
 
 .modal {
@@ -84,14 +181,56 @@
 	justify-content:center;
 	align-items: center;
 	
-	background: #00000050;
+	background: var(--modal-background);
 }
 
 .task-modal-content {
-	width: 60vw;
-	height: 60vh;
+	width: 65vw;
 	
-	background: #ddd;
+	background: var(--background-light);
+	border-radius: 32px;
+	padding: 2rem;
+}
+
+#task-details-table {
+	margin-bottom: 1.4rem;
+	width: 100%;
+}
+
+#task-details-table-left {
+	width: 30%;
+	font-weight: bold;
+	padding: 0.2rem;
+}
+
+#task-details-button-container {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+}
+
+#task-details-delete-button, #task-details-close-button {
+	padding: 0.5rem 1rem;
+	
+	font-family: var(--font) !important;
+	background-color: var(--background-middark);
+	border: none;
+	border-radius: 8px;
+	transition: background 0.2s, transform 0.2s;
+	font-size: 1rem;
+}
+
+#task-details-delete-button:hover, #task-details-close-button:hover {
+	background-color: var(--background-dark);
+	transform: scale(1.04);
+}
+
+#task-details-header {
+	margin-top: 0rem;
+}
+
+#task-name-delete-form {
+	display: none;
 }
 
 .show {
@@ -102,36 +241,25 @@
 	display: none;
 }
 
-.active {
-	background: #ccc;
-}
-
 h1 {
+	margin: 0rem 1rem;
 	padding: 1rem;
 	font-size: 3.2rem;
 }
 
+h2 {
+	color: var(--text-colour) !important;
+	font-family: var(--font) !important;
+}
+
 h3 {
 	padding: 0.6rem;
+	margin: 0.4rem;
+	
 	font-size: 1.4rem;
+	border-bottom: 2px solid var(--border);
 }
 
 ::-webkit-scrollbar {
     display: none;
 }
-
-#task-name-delete-form {
-	display: none;
-}
-/*
-#person-submit, #status-submit, #priority-submit{
-	margin-top: 20px;
-	background: rgb(200, 220, 180);
-	border: 1px solid grey;
-	border-radius: 3px;
-	padding-left: 7px;
-	padding-right: 7px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
-*/
