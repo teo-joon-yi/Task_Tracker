@@ -25,6 +25,11 @@ Name TEXT
 
 connection.close()
 
+def add_people(name):
+    connection = sqlite3.connect("tasks.db")
+    connection.execute('''INSERT INTO People(Name) VALUES(?)''', (name,))
+    return True
+
 def insert_task(title, desc, assignedmember, createdby, status="In Progress", priority="Low"):
     connection = sqlite3.connect("tasks.db")
     try:
@@ -99,6 +104,16 @@ def delete_task(taskname):
   connection.execute('''DELETE FROM Tasks WHERE Title = ?''', (taskname,))
   connection.commit()
   connection.close()
+
+add_people("Joon Yi")
+add_people("Rae Lynn")
+add_people("Deeksha")
+add_people("Josephine")
+add_people("Mr Lai")
+
+insert_task("Buy ingredients", "buy flour, eggs and sugar", "Joon Yi", "Mr Lai")
+insert_task("Bake cookies", "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/ link to cookie recipe", "Rae Lynn", "Deeksha")
+insert_task("Clean up", "clean up workspace after baking cookies", "Josephine", "Mr Lai")
 
 
 app = Flask(__name__)
