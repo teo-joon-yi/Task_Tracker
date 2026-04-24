@@ -7,17 +7,8 @@
 
 <body>
 
-	<div id = "task-modal" class = "modal">
-		<div class = "task-modal-content">
-			<h2>Test</h2>
-			<form method = "POST" action = "test">
-				<input type = "text" name = "taskName" id = "taskNameDeleteForm" value="placeholder ID">
-				<input type = "submit" value = "Delete" class = "delete-submit">
-			</form>
-			<button id="task-modal-close-button" onclick="closeTaskDetails()">Close</button>
-			</div>
-	</div>
-	
+	<div id = "task-modal" class = "modal"></div>
+
 	<div class="navbar-container">
 		<h1>Title</h1>
 		<form method="GET" action="search" class="navbar-search">
@@ -29,69 +20,196 @@
 	
 	<div class="body-container">
 		<div class = "sidebar-container">
-			<h3>People</h3>
-			<form>
-				{%for person in people%}
-				<input type="radio" id=person name="person-selected" value=person>
-				<label for=person>{{ person }}</label>
-				<br>
-				{%endfor%}
-				<input type="submit" id="person-submit" name="submit">
-			</form>
-			<h3>Status</h3>
-			<form>
-				<input type="radio" id="status-not-started" name="status-selected" value="Not Started">
-				<label for="status-not-started">Not Started</label>
-				<br>
-				<input type="radio" id="status-in-progress" name="status-selected" value="In Progress">
-				<label for="status-in-progress">In Progress</label>
-				<br>
-				<input type="radio" id="status-completed" name="status-selected" value="Completed">
-				<label for="status-completed">Completed</label>
-				<br>
-				<input type="submit" id="status-submit" name="submit">
-			</form>
-			<h3>Priority</h3>
-			<form>
-				<input type="radio" id="priority-low" name="priority-selected" value="Low">
-				<label for="priority-low">Low</label>
-				<br>
-				<input type="radio" id="priority-medium" name="priority-selected" value="Medium">
-				<label for="priority-medium">Medium</label>
-				<br>
-				<input type="radio" id="priority-high" name="priority-selected" value="High">
-				<label for="priority-high">High</label>
-				<br>
-				<input type="submit" id="priority-submit" name="submit">
-			</form>
-			<h3>Space</h3>
-			<h3>Space</h3>
-			<h3>Space</h3>
-		</div>
-		<div class="tasks-container">
-			{%for task in tasks%}
-				<div>
-					<h5>{{placeholder}}</h5>
-				</div>
-			{%endfor%}
-		</div>
-	</div>
-</body>
-	<script>
-	var taskDetailsModal = document.getElementById("task-modal")
-	
-	function openTaskDetails() {
-		taskDetailsModal.style.display = "block";
-	}
 		
+			<div id = "all-filter-container" class = "filter-container" >
+			<button id="filter-all" name="filter-all" onclick="filterElements('all')">All</button>
+			</div>
+			
+			<h3>People</h3>
+			<div id = "people-filter-container" class = "filter-container" ></div>
+			
+			<h3>Status</h3>
+			<div id = "status-filter-container" class = "filter-container" >
+				<button id="status-not-started" name="status-selected" onclick="filterElements('not-started')">Not Started</button>
+				<button id="status-in-progress" name="status-selected" onclick="filterElements('in-progress')">In Progress</button>
+				<button id="status-completed" name="status-selected" onclick="filterElements('completed')">Completed</button>
+			</div>
+	
+			<h3>Priority</h3>
+			<div id = "priority-filter-container" class = "filter-container" >
+				<button id="priority-high" name="priority-selected" onclick="filterElements('high')">High</button>
+				<button id="priority-medium" name="priority-selected" onclick="filterElements('medium')">Medium</button>
+				<button id="priority-low" name="priority-selected" onclick="filterElements('low')">Low</button>
+			</div>
+		</div>
+		
+		<div class="tasks-container" id="task-preview-container"></div>
+	</div>
+	
+	<template id = "task-details-template">
+		<div class = "task-modal-content">
+			<h2 id = "task-details-header"></h2>
+			<table>
+				<tr>
+					<td>Description</td>
+					<td id = "task-details-description"></td>
+				</tr>
+				<tr>
+					<td>Assigned To</td>
+					<td id = "task-details-assigned-to"></td>
+				</tr>
+				<tr>
+					<td>Created By</td>
+					<td id = "task-details-created-by"></td>
+				</tr>
+				<tr>
+					<td>Priority</td>
+					<td id = "task-details-priority"></td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td id = "task-details-status"></td>
+				</tr>
+			</table>
+			<form method = "POST" action = "">
+				<input type = "text" name = "taskName" id = "task-name-delete-form" value="placeholder ID">
+				<input type = "submit" value = "Delete" class = "delete-submit">
+			</form>
+			<button id="task-modal-close-button" onclick="closeTaskDetails()">Close</button>
+			</div>
+	</template>
+	
+	<template id = "task-preview-template">
+		<button class = "task-filter" onclick ="">
+				<h5 id = "task-preview-header"></h5>
+		</button>
+	</template>
+	
+	<template id = "people-filter-button-template">
+		<button id="person-filter-button" name="person-selected" onclick=""></button>
+	</template>
+	
+	<script>
+	var allTasksArray = {{ cursor }};
+	<!-- var name is "cursor" -->
+	<!-- title, description, assigned member, created by, priority, status-->
+	var allPeopleArray = {{ person }};
+	<!-- var name is person -->
+	
+	function filterElements(selectedClass) {
+		var allElements, i;
+		allElements = document.getElementsByClassName("task-filter")
+		if (selectedClass == "all") selectedClass = "";
+		for (i = 0; i < allElements.length; i++) {
+			elementRemoveClass(allElements[i], "show");
+			if (allElements[i].className.indexOf(selectedClass) > -1) {
+				elementAddClass(allElements[i], "show");
+			}
+		}
+	}
+	
+	function elementAddClass(element, selectedClass) {
+		elementClasses = element.className.split(" ");
+		if (elementClasses.indexOf(selectedClass) == -1) {
+			element.className += " ";
+			element.className += selectedClass;
+		}
+	}
+	
+	function elementRemoveClass(element,selectedClass) {
+		elementClasses = element.className.split(" ");
+		if (elementClasses.indexOf(selectedClass) > -1) {
+			elementClasses.splice(elementClasses.indexOf(selectedClass), 1);
+		}
+		element.className = elementClasses.join(" ");
+	}
+	
+	var taskDetailsModal = document.getElementById("task-modal");
+	var taskDetailsTemplate = document.getElementById("task-details-template");
+	
+	function openTaskDetails(taskID) {
+		const taskDetailsCard = taskDetailsTemplate.content.cloneNode(true).children[0];
+		const taskDetailsCardHeader = taskDetailsCard.querySelector("#task-details-header");
+		const taskDetailsCardInfo = taskDetailsCard.querySelector("#task-details-info");
+		const taskNameDeleteForm = taskDetailsCard.querySelector("#task-name-delete-form");
+		
+		taskDetailsCardHeader.textContent = allTasksArray[taskID][0];
+		taskNameDeleteForm.setAttribute("value", [taskID][0]);
+		
+		const taskDetailsCardDescription = taskDetailsCard.querySelector("#task-details-description");
+		const taskDetailsCardAssignedTo = taskDetailsCard.querySelector("#task-details-assigned-to");
+		const taskDetailsCardCreatedBy = taskDetailsCard.querySelector("#task-details-created-by");
+		const taskDetailsCardPriority = taskDetailsCard.querySelector("#task-details-status");
+		const taskDetailsCardStatus = taskDetailsCard.querySelector("#task-details-priority");
+		
+		taskDetailsCardDescription.textContent = allTasksArray[taskID][1];
+		taskDetailsCardAssignedTo.textContent = allTasksArray[taskID][2];
+		taskDetailsCardCreatedBy.textContent = allTasksArray[taskID][3];
+		taskDetailsCardPriority.textContent = allTasksArray[taskID][4];
+		taskDetailsCardStatus.textContent = allTasksArray[taskID][5];
+		
+		taskDetailsModal.append(taskDetailsCard);
+		taskDetailsModal.style.display = "flex";
+	}
+	
 	function closeTaskDetails() {
 		taskDetailsModal.style.display = "none";
+		taskDetailsModal.removeChild(taskDetailsModal.children[0])
+	}
+	
+	var taskPreviewContainer = document.getElementById("task-preview-container");
+	var taskPreviewTemplate = document.getElementById("task-preview-template");
+	
+	function loadTaskPreviews() {
+		var i;
+		for (i = 0; i < allTasksArray.length; i++) {
+			const taskPreviewCard = taskPreviewTemplate.content.cloneNode(true).children[0];
+			const taskPreviewCardHeader = taskPreviewCard.querySelector("#task-preview-header");
+			
+			taskPreviewCard.className += " " + convertToClassName(allTasksArray[i][2]);
+			taskPreviewCard.className += " " + convertToClassName(allTasksArray[i][4]);
+			taskPreviewCard.className += " " + convertToClassName(allTasksArray[i][5]);
+			
+			taskPreviewCard.setAttribute("onclick", "openTaskDetails(" + i + ")");
+			taskPreviewCardHeader.textContent = allTasksArray[i][0];
+			taskPreviewContainer.append(taskPreviewCard);
+		}
+	}
+	
+	var peopleFilterButtonTemplate = document.querySelector("#people-filter-button-template");
+	var peopleFilterContainer = document.querySelector("#people-filter-container")
+	
+	function loadPeopleFilterButtons() {
+		var i;
+		for (i = 0; i < allPeopleArray.length; i++) {
+			const peopleFilterButton = peopleFilterButtonTemplate.content.cloneNode(true).children[0];			
+			peopleFilterButton.textContent = allPeopleArray[i];
+			var functionName = "filterElements('" + convertToClassName(allPeopleArray[i]) + "')"
+			console.log(functionName);
+			peopleFilterButton.setAttribute("onclick",functionName);
+			
+			peopleFilterContainer.append(peopleFilterButton);
+		}
+	}
+	
+	function convertToClassName(inString) {
+		var outString = "";
+		var i;
+		for (i = 0; i < inString.length; i++) {
+			if (inString[i] == " ") outString += "-";
+			else outString += inString[i].toLowerCase();
+		}
+		return outString;
 	}
 	
 	window.onclick = function(event) {
-		if (event.target == taskDetailsModal) {
-			taskDetailsModal.style.display = "none";
-		}
+		if (event.target == taskDetailsModal) closeTaskDetails();
 	}
-	</script>
+	
+	loadTaskPreviews();
+	loadPeopleFilterButtons();
+	filterElements("all")
+	
+</script>
+</body>
 </html>
