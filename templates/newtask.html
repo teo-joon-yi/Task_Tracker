@@ -21,13 +21,11 @@
 
       <div class="form-group">
         <label class="field-label">People involved</label>
-        <div class="checkbox-grid">
+        <select name="peopleInvolved">
           {% for person in data %}
-          <label class="checkbox-item">
-            <input type="checkbox" name="people" value="{{person}}">{{person}}
-          </label>
+            <option value="{{person}}">{{person}}</option>
           {% endfor %}
-        </div>
+        </select>
       </div>
 
       <div class="form-group">
