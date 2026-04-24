@@ -106,9 +106,9 @@
 	</template>
 	
 	<script>
-	var allTasksArray = {{ cursor }};
+	var allTasksArray = {{ cursor | tojson }};
 	<!-- title, description, assigned member, created by, priority, status-->
-	var allPeopleArray = {{ person }};
+	var allPeopleArray = {{ person | tojson }};
 	
 	function filterElements(selectedClass) {
 		var allElements, i;
@@ -167,21 +167,21 @@
 		const taskNameDeleteForm = taskDetailsCard.querySelector("#task-name-delete-form");
 		const taskNameUpdateForm = taskDetailsCard.querySelector("#task-name-update-form");
 		
-		taskDetailsCardHeader.textContent = allTasksArray[taskID][0];
-		taskNameDeleteForm.setAttribute("value", allTasksArray[taskID][0]);
-		taskNameUpdateForm.setAttribute("value", allTasksArray[taskID][0]);
+		taskDetailsCardHeader.textContent = allTasksArray[taskID]["Title"];
+		taskNameDeleteForm.setAttribute("value", allTasksArray[taskID]["Title"]);
+		taskNameUpdateForm.setAttribute("value", allTasksArray[taskID]["Title"]);
 		
 		const taskDetailsCardDescription = taskDetailsCard.querySelector("#task-details-description");
 		const taskDetailsCardAssignedTo = taskDetailsCard.querySelector("#task-details-assigned-to");
 		const taskDetailsCardCreatedBy = taskDetailsCard.querySelector("#task-details-created-by");
-		const taskDetailsCardPriority = taskDetailsCard.querySelector("#task-details-status");
-		const taskDetailsCardStatus = taskDetailsCard.querySelector("#task-details-priority");
+		const taskDetailsCardPriority = taskDetailsCard.querySelector("#task-details-priority");
+		const taskDetailsCardStatus = taskDetailsCard.querySelector("#task-details-status");
 		
-		taskDetailsCardDescription.textContent = allTasksArray[taskID][1];
-		taskDetailsCardAssignedTo.textContent = allTasksArray[taskID][2];
-		taskDetailsCardCreatedBy.textContent = allTasksArray[taskID][3];
-		taskDetailsCardPriority.textContent = allTasksArray[taskID][4];
-		taskDetailsCardStatus.textContent = allTasksArray[taskID][5];
+		taskDetailsCardDescription.textContent = allTasksArray[taskID]["Description"];
+		taskDetailsCardAssignedTo.textContent = allTasksArray[taskID]["AssignedMember"];
+		taskDetailsCardCreatedBy.textContent = allTasksArray[taskID]["CreatedBy"];
+		taskDetailsCardPriority.textContent = allTasksArray[taskID]["Priority"];
+		taskDetailsCardStatus.textContent = allTasksArray[taskID]["Status"];
 		
 		taskDetailsModal.append(taskDetailsCard);
 		taskDetailsModal.style.display = "flex";
@@ -201,12 +201,12 @@
 			const taskPreviewCard = taskPreviewTemplate.content.cloneNode(true).children[0];
 			const taskPreviewCardHeader = taskPreviewCard.querySelector("#task-preview-header");
 			
-			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i][2]));
-			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i][4]));
-			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i][5]));
+			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i]["AssignedMember"]));
+			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i]["Priority"]));
+			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i]["Status"]));
 			
 			taskPreviewCard.setAttribute("onclick", "openTaskDetails(" + i + ")");
-			taskPreviewCardHeader.textContent = allTasksArray[i][0];
+			taskPreviewCardHeader.textContent = allTasksArray[i]["Title"];
 			taskPreviewContainer.append(taskPreviewCard);
 		}
 	}
@@ -218,8 +218,8 @@
 		var i;
 		for (i = 0; i < allPeopleArray.length; i++) {
 			const peopleFilterButton = peopleFilterButtonTemplate.content.cloneNode(true).children[0];			
-			peopleFilterButton.textContent = allPeopleArray[i];
-			var functionName = "filterElements('" + convertToClassName(allPeopleArray[i]) + "')"
+			peopleFilterButton.textContent = allPeopleArray[i]["Name"];
+			var functionName = "filterElements('" + convertToClassName(allPeopleArray[i]["Name"]) + "')"
 			peopleFilterButton.setAttribute("onclick",functionName);
 			
 			peopleFilterContainer.append(peopleFilterButton);
