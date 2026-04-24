@@ -48,7 +48,11 @@
 	
 	<template id = "task-details-template">
 		<div class = "task-modal-content">
-			<h2 id = "task-details-header"></h2>
+			<div class = "task-modal-header-container">
+				<h2 id = "task-details-header"></h2>
+				<button id="task-details-close-button" onclick="closeTaskDetails()">Close</button>
+			</div>
+			<hr>
 			<table id = "task-details-table">
 				<tr>
 					<td id = "task-details-table-left" >Description</td>
@@ -71,13 +75,23 @@
 					<td id = "task-details-status"></td>
 				</tr>
 			</table>
-			<div id = "task-details-button-container">
-				<form method = "POST" action = "">
-					<input type = "text" name = "taskName" id = "task-name-delete-form" value="">
-					<input type = "submit" value = "Delete" id = "task-details-delete-button">
-				</form>
-				<button id="task-details-close-button" onclick="closeTaskDetails()">Close</button>
-			</div>
+			<hr>
+			<form method = "POST" action = "">
+				<input type = "text" name = "taskNameUpdate" id = "task-name-update-form" value="">
+				<div>
+					<span><b>Status:</b></span>
+					<select name = "taskStatusUpdate" id = "task-status-update-form">
+						<option value = "not-started">Not Started</option>
+						<option value = "in-progress">In Progress</option>
+						<option value = "completed">Completed</option>
+					</select>
+					<input type = "submit" value = "Update" id = "task-details-update-button">
+				</div>
+			</form>
+			<form method = "POST" action = "">
+				<input type = "text" name = "taskNameDelete" id = "task-name-delete-form" value="">
+				<input type = "submit" value = "Delete" id = "task-details-delete-button">
+			</form>
 		</div>
 	</template>
 	
@@ -151,9 +165,11 @@
 		const taskDetailsCardHeader = taskDetailsCard.querySelector("#task-details-header");
 		const taskDetailsCardInfo = taskDetailsCard.querySelector("#task-details-info");
 		const taskNameDeleteForm = taskDetailsCard.querySelector("#task-name-delete-form");
+		const taskNameUpdateForm = taskDetailsCard.querySelector("#task-name-update-form");
 		
 		taskDetailsCardHeader.textContent = allTasksArray[taskID][0];
 		taskNameDeleteForm.setAttribute("value", allTasksArray[taskID][0]);
+		taskNameUpdateForm.setAttribute("value", allTasksArray[taskID][0]);
 		
 		const taskDetailsCardDescription = taskDetailsCard.querySelector("#task-details-description");
 		const taskDetailsCardAssignedTo = taskDetailsCard.querySelector("#task-details-assigned-to");
