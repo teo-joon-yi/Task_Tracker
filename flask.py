@@ -1,5 +1,5 @@
-import sqlite3
 from flask import Flask, render_template, request
+import sqlite3
 
 connection = sqlite3.connect("tasks.db") #connects to task database
 
@@ -24,11 +24,6 @@ Name TEXT
 )''') #if we create a login feature can add password or smth
 
 connection.close()
-
-def add_people(name):
-    connection = sqlite3.connect("tasks.db")
-    connection.execute('''INSERT INTO People(Name) VALUES(?)''', (name,))
-    return True
 
 def insert_task(title, desc, assignedmember, createdby, status="In Progress", priority="Low"):
     connection = sqlite3.connect("tasks.db")
@@ -57,7 +52,7 @@ def filter_task(filterby, value):
     elif filterby == "Status":
         cursor = connection.execute('''SELECT * FROM Tasks WHERE Status= ?''', (value,)).fetchall()
     connection.close()
-
+    
     filterlist = []
     for tup in cursor:
         tuplist = []
@@ -98,24 +93,12 @@ def update_task(taskname, updateby, newvalue): #e.g. if we're updating status fr
     else:
         return False
     connection.close()
-
+    
 def delete_task(taskname):
   connection = sqlite3.connect("tasks.db")
   connection.execute('''DELETE FROM Tasks WHERE Title = ?''', (taskname,))
   connection.commit()
   connection.close()
-
-
-add_people("Joon Yi")
-add_people("Rae Lynn")
-add_people("Deeksha")
-add_people("Josephine")
-add_people("Mr Lai")
-
-insert_task("Buy ingredients", "buy flour, eggs and sugar", "Joon Yi", "Mr Lai")
-insert_task("Bake cookies", "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/ link to cookie recipe", "Rae Lynn", "Deeksha")
-insert_task("Clean up", "clean up workspace after baking cookies", "Josephine", "Mr Lai")
-
 
 
 app = Flask(__name__)
@@ -160,19 +143,12 @@ def new_task():
     if request.method == 'POST':    
         name = request.form['name']     
         description = request.form['description']
-        people = request.form['people']
+        peopleInvolved = request.form['peopleInvolved']
         creator = request.form['creator']
         status = request.form['status']
 
-        insert_task(name, description, people, creator,status)
+        insert_task(name, description, peopleInvolved, creator,status)
         return render_template("home.html")
 
     else:
         return render_template("newtask.html")
-    
-app.route('/delete task/', methods = ["POST"])
-def delete_task():
-        task_name = request.form['task_name']
-
-        delete_task(task_name)
-        return render_template("home.html")
