@@ -1,40 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="{{url_for('static',filename='newtaskstyle.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename="newtaskstyle.css")}}>
     <title>New Task</title>
 </head>
-  <body>
-    <h1>New Task</h1>
-    <form>
-      <p>Enter the name of the task:</p>
-      <input type="text" name="name">
-      <p>Enter the description of the task:</p>
-      <input type="text" name="description">
-      <p>Select people involved:</p>
-        {% for person in data %} <!-- change var names later -->
-        <label>
-          <input type="checkbox" name="people" value="{{person}}">{{person}}
-        </label><br>
-        {% endfor %}
-      <p>Task created by:</p>
+<body>
+  <h1>New Task</h1>
+  <form>
+    <div class="form-grid">
+
+      <div class="form-group full">
+        <label class="field-label">Task name</label>
+        <input type="text" name="name">
+      </div>
+
+      <div class="form-group full">
+        <label class="field-label">Description</label>
+        <textarea name="description"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">People involved</label>
+        <div class="checkbox-grid">
+          {% for person in data %}
+          <label class="checkbox-item">
+            <input type="checkbox" name="people" value="{{person}}">{{person}}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">Status</label>
+        <select name="status">
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="Not Started">Not Started</option>
+        </select>
+      </div>
+
+      <div class="form-group full">
+        <label class="field-label">Created by</label>
         <select name="creator">
-          {% for person in data %} <!-- change var names later -->
-          <option value="{{person}}" {{person}}></option>
+          {% for person in data %}
+          <option value="{{person}}">{{person}}</option>
           {% endfor %}
         </select>
-      <p>Status:</p>
-      <select name="status">
-        <option value="In Progress">In Progress</option>
-        <option value="Completed">Completed</option>
-        <option value="Not Started">Not Started</option>
-      </select>
-      <br><br>
+      </div>
 
-      <button type="submit">Submit</button>
-        
-    </form>
-  </body>
+      <div class="form-group full">
+        <button type="submit">Submit</button>
+      </div>
 
-
+    </div>
+  </form>
+</body>
 </html>
