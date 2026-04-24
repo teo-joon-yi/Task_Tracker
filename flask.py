@@ -121,6 +121,20 @@ def people_list():
 
     return peoplelist
 
+def all_tasks():
+    connection = sqlite3.connect("tasks.db")
+    cursor = connection.execute('''SELECT * FROM Tasks''').fetchall()
+    connection.close()
+
+    filterlist = []
+    for tup in cursor:
+        tuplist = []
+        for item in tup:
+            tuplist.append(item)
+        filterlist.append(tuplist)
+    
+    return filterlist
+
 try:
     add_people("Joon Yi")
     add_people("Rae Lynn")
@@ -165,12 +179,7 @@ def home():
 
         elif taskname:
             delete_task(taskname)
-            return render_template("home.html")
-
-            
-            
-
-        
+            return render_template("home.html")        
 
 @app.route('/newtask/', methods = ["POST", "GET"])
 def new_task():
