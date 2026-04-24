@@ -43,13 +43,13 @@ body {
 	align-items: center;
 }
 
-#navbar-search, #navbar-new-task {
-	margin: 0rem 2rem;
+#navbar-new-task {
+	margin: 0rem 2rem 0rem 4rem;
 }
 
 #navbar-search-input {
 	padding: 0.6rem;
-	margin: 0.2rem;
+	margin: 0rem 0.8rem;
 	
 	background-color: var(--background-middark);
 	border: 2px solid var(--text-colour);
@@ -151,7 +151,7 @@ body {
 .filter-button {
 	margin: 0.2rem 1.5rem;
 	padding: 0.4rem;
-
+	
 	font-family: var(--font);
 	color: var(--text-colour);
 	background-color: var(--background-light);
@@ -213,8 +213,8 @@ body {
 
 #task-details-delete-button, #task-details-close-button {
 	padding: 0.5rem 1rem;
-
-	color: var(--textcolour);
+	
+	color: var(--text-colour);
 	font-family: var(--font) !important;
 	background-color: var(--background-middark);
 	border: none;
