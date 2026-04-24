@@ -79,37 +79,36 @@ def delete_task(taskname):
 
 app = Flask(__name__)
 
-@app.route('/',)
+@app.route('/', methods = ["GET", "POST"])
 def home():
-    return render_template("home.html")
-    
-@app.route('/update/', methods=["POST"])
-def update():
-    
-    filter_by = request.form["filter_by"]    
-    filter_value = request.form["filter_value"]
+    if request.method=="GET":
+        return render_template("home.html")
+    else: #post
+        #filter submit
+        status = request.form.get("status-selected")
+        priority = request.form.get("priority-selected")
+        person = request.form.get("person-selected")
 
-    
-    tasks = filter_task(filter_by, filter_value)
-
-    
-    status = request.form["status-selected"]
-    priority = request.form["priority-selected"]
-    person = request.form["person-selected"]
-
-    for task in tasks:
-        task_name = task[0]  
-
+        #delete submit
+        taskname = request.form.get("TaskName")
+        
+        
         if status:
-            update_task(task_name, "Status", status)
+            cursor = filter_task("Status", status)
+            return render_template("home.html", cursor = cursor)
 
         elif priority:
-            update_task(task_name, "Priority", priority)
+            cursor = filter_task("Priority", priority)
+            return render_template("home.html", cursor = cursor)
 
         elif person:
-            update_task(task_name, "AssignedMember", person)
-    return render_template("home.html")
+           cursor = filter_task("AssignedMember", person)
+            return render_template("home.html", cursor = cursor)
 
+        elif 
+            
+
+        
 
 @app.route('/newtask/', methods = ["POST", "GET"])
 def new_task():
