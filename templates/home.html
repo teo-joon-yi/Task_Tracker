@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Task Tracker</title>
-	<link rel="stylesheet" href="../static/home.css">
+	<link rel="stylesheet" href={{url_for('static',filename="home.css")}}>
 </head>
 
 <body>
@@ -11,18 +11,20 @@
 
 	<div class="navbar-container">
 		<h1>Title</h1>
-		<form method="GET" action="search" class="navbar-search">
-			<input type="text" placeholder="Search for a task" name="search" class="navbar-search-input" required>
-			<input type="submit" class="navbar-search-submit" name="search-submit">
-		</form>
-		<a id = "newTaskFormLink" href = {{ url_for('new_task') }}>New Task</a>
+		<div class = "navbar-search-container">
+			<form method="GET" action="search" id = "navbar-search">
+				<input type = "text" placeholder = "Search by task name" name = "search" id = "navbar-search-input" required>
+				<input type = "submit" id = "navbar-search-submit" name = "search-submit">
+			</form>
+			<a id = "navbar-new-task" href = {{ url_for('new_task') }}>+ New Task</a>
+		</div>
 	</div>
 	
 	<div class="body-container">
 		<div class = "sidebar-container">
 		
 			<div id = "all-filter-container" class = "filter-container" >
-			<button id="filter-all" name="filter-all" onclick="filterElements('all')">All</button>
+			<button id="filter-all" class = "filter-button active" name="filter-all" onclick="filterElements('all')">All</button>
 			</div>
 			
 			<h3>People</h3>
@@ -30,16 +32,16 @@
 			
 			<h3>Status</h3>
 			<div id = "status-filter-container" class = "filter-container" >
-				<button id="status-not-started" name="status-selected" onclick="filterElements('not-started')">Not Started</button>
-				<button id="status-in-progress" name="status-selected" onclick="filterElements('in-progress')">In Progress</button>
-				<button id="status-completed" name="status-selected" onclick="filterElements('completed')">Completed</button>
+				<button id="status-not-started" class ="filter-button" name="status-selected" onclick="filterElements('not-started')">Not Started</button>
+				<button id="status-in-progress" class ="filter-button" name="status-selected" onclick="filterElements('in-progress')">In Progress</button>
+				<button id="status-completed" class ="filter-button" name="status-selected" onclick="filterElements('completed')">Completed</button>
 			</div>
 	
 			<h3>Priority</h3>
 			<div id = "priority-filter-container" class = "filter-container" >
-				<button id="priority-high" name="priority-selected" onclick="filterElements('high')">High</button>
-				<button id="priority-medium" name="priority-selected" onclick="filterElements('medium')">Medium</button>
-				<button id="priority-low" name="priority-selected" onclick="filterElements('low')">Low</button>
+				<button id="priority-high" class ="filter-button" name="priority-selected" onclick="filterElements('high')">High</button>
+				<button id="priority-medium" class ="filter-button" name="priority-selected" onclick="filterElements('medium')">Medium</button>
+				<button id="priority-low" class ="filter-button" name="priority-selected" onclick="filterElements('low')">Low</button>
 			</div>
 		</div>
 		
@@ -49,52 +51,52 @@
 	<template id = "task-details-template">
 		<div class = "task-modal-content">
 			<h2 id = "task-details-header"></h2>
-			<table>
+			<table id = "task-details-table">
 				<tr>
-					<td>Description</td>
+					<td id = "task-details-table-left" >Description</td>
 					<td id = "task-details-description"></td>
 				</tr>
 				<tr>
-					<td>Assigned To</td>
+					<td id = "task-details-table-left">Assigned To</td>
 					<td id = "task-details-assigned-to"></td>
 				</tr>
 				<tr>
-					<td>Created By</td>
+					<td id = "task-details-table-left">Created By</td>
 					<td id = "task-details-created-by"></td>
 				</tr>
 				<tr>
-					<td>Priority</td>
+					<td id = "task-details-table-left">Priority</td>
 					<td id = "task-details-priority"></td>
 				</tr>
 				<tr>
-					<td>Status</td>
+					<td id = "task-details-table-left">Status</td>
 					<td id = "task-details-status"></td>
 				</tr>
 			</table>
-			<form method = "POST" action = "">
-				<input type = "text" name = "taskName" id = "task-name-delete-form" value="placeholder ID">
-				<input type = "submit" value = "Delete" class = "delete-submit">
-			</form>
-			<button id="task-modal-close-button" onclick="closeTaskDetails()">Close</button>
+			<div id = "task-details-button-container">
+				<form method = "POST" action = "">
+					<input type = "text" name = "taskName" id = "task-name-delete-form" value="">
+					<input type = "submit" value = "Delete" id = "task-details-delete-button">
+				</form>
+				<button id="task-details-close-button" onclick="closeTaskDetails()">Close</button>
 			</div>
+		</div>
 	</template>
 	
 	<template id = "task-preview-template">
 		<button class = "task-filter" onclick ="">
-				<h5 id = "task-preview-header"></h5>
+				<h2 id = "task-preview-header"></h2>
 		</button>
 	</template>
 	
 	<template id = "people-filter-button-template">
-		<button id="person-filter-button" name="person-selected" onclick=""></button>
+		<button id="person-filter-button" class ="filter-button" name="person-selected" onclick=""></button>
 	</template>
 	
 	<script>
-	var allTasksArray = {{ cursor }};
-	<!-- var name is "cursor" -->
+	var allTasksArray = {{ cursor }}
 	<!-- title, description, assigned member, created by, priority, status-->
-	var allPeopleArray = {{ person }};
-	<!-- var name is person -->
+	var allPeopleArray = {{ person }}
 	
 	function filterElements(selectedClass) {
 		var allElements, i;
@@ -134,7 +136,7 @@
 		const taskNameDeleteForm = taskDetailsCard.querySelector("#task-name-delete-form");
 		
 		taskDetailsCardHeader.textContent = allTasksArray[taskID][0];
-		taskNameDeleteForm.setAttribute("value", [taskID][0]);
+		taskNameDeleteForm.setAttribute("value", allTasksArray[taskID][0]);
 		
 		const taskDetailsCardDescription = taskDetailsCard.querySelector("#task-details-description");
 		const taskDetailsCardAssignedTo = taskDetailsCard.querySelector("#task-details-assigned-to");
@@ -166,9 +168,9 @@
 			const taskPreviewCard = taskPreviewTemplate.content.cloneNode(true).children[0];
 			const taskPreviewCardHeader = taskPreviewCard.querySelector("#task-preview-header");
 			
-			taskPreviewCard.className += " " + convertToClassName(allTasksArray[i][2]);
-			taskPreviewCard.className += " " + convertToClassName(allTasksArray[i][4]);
-			taskPreviewCard.className += " " + convertToClassName(allTasksArray[i][5]);
+			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i][2]));
+			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i][4]));
+			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i][5]));
 			
 			taskPreviewCard.setAttribute("onclick", "openTaskDetails(" + i + ")");
 			taskPreviewCardHeader.textContent = allTasksArray[i][0];
@@ -185,7 +187,6 @@
 			const peopleFilterButton = peopleFilterButtonTemplate.content.cloneNode(true).children[0];			
 			peopleFilterButton.textContent = allPeopleArray[i];
 			var functionName = "filterElements('" + convertToClassName(allPeopleArray[i]) + "')"
-			console.log(functionName);
 			peopleFilterButton.setAttribute("onclick",functionName);
 			
 			peopleFilterContainer.append(peopleFilterButton);
@@ -209,6 +210,17 @@
 	loadTaskPreviews();
 	loadPeopleFilterButtons();
 	filterElements("all")
+	
+	var filterButtonsArray = document.getElementsByClassName("filter-button");
+	
+	for (var i = 0; i < filterButtonsArray.length; i++)  {
+		filterButtonsArray[i].addEventListener("click", function() {
+			console.log(this.className);
+			var currentActiveButton = document.getElementsByClassName("active");
+			currentActiveButton[0].className = currentActiveButton[0].className.replace(" active", "");
+			this.className += " active";
+		});
+	}
 	
 </script>
 </body>
