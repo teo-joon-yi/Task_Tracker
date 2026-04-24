@@ -80,6 +80,11 @@ button[type="submit"] {
   cursor: pointer;
 }
 
+button[type="submit"]:hover{
+  background:#fff;
+  color:#111;
+}
+
 textarea {
   border: 1px solid #ddd;
   border-radius: 8px;
