@@ -30,6 +30,8 @@ connection.close()
 def add_people(name):
     connection = sqlite3.connect("tasks.db")
     connection.execute('''INSERT INTO People(Name) VALUES(?)''', (name,))
+    connection.commit()
+    connection.close()
     return True
 
 
@@ -113,25 +115,25 @@ def delete_task(taskname):
 
 def people_list():
     connection = sqlite3.connect("tasks.db")
-    cursor = connection.execute('''SELECT Name FROM People''').fetchall()
+    connection.row_factory = sqlite3.Row
+    cursor = connection.execute('''SELECT Name FROM People''')
+    connection.close()
 
     peoplelist = []
     for item in cursor:
-        peoplelist.append(item[0])
+        peoplelist.append(dict(item))
 
     return peoplelist
 
 def all_tasks():
     connection = sqlite3.connect("tasks.db")
-    cursor = connection.execute('''SELECT * FROM Tasks''').fetchall()
+    connection.row_factory = sqlite3.Row
+    cursor = connection.execute('''SELECT * FROM Tasks''')
     connection.close()
 
     filterlist = []
-    for tup in cursor:
-        tuplist = []
-        for item in tup:
-            tuplist.append(item)
-        filterlist.append(tuplist)
+    for row in cursor:
+        filterlist.append(dict(row))
     
     return filterlist
 
@@ -154,7 +156,9 @@ app = Flask(__name__)
 @app.route('/', methods = ["GET", "POST"])
 def home():
     if request.method=="GET":
-        return render_template("home.html")
+        cursor = all_tasks()
+        people = people_list()
+        return render_template("home.html", cursor = cursor, person = people)
     else: #post
         #filter submit
         status = request.form.get("status-selected")
