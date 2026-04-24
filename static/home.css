@@ -151,7 +151,9 @@ body {
 .filter-button {
 	margin: 0.2rem 1.5rem;
 	padding: 0.4rem;
-	
+
+	font-family: var(--font);
+	color: var(--text-colour);
 	background-color: var(--background-light);
 	border: none;
 	border-radius: 8px;
@@ -211,7 +213,8 @@ body {
 
 #task-details-delete-button, #task-details-close-button {
 	padding: 0.5rem 1rem;
-	
+
+	color: var(--textcolour);
 	font-family: var(--font) !important;
 	background-color: var(--background-middark);
 	border: none;
