@@ -12,10 +12,8 @@
 	<div class="navbar-container">
 		<h1>Title</h1>
 		<div class = "navbar-search-container">
-			<form method="GET" action="search" id = "navbar-search">
-				<input type = "text" placeholder = "Search by task name" name = "search" id = "navbar-search-input" required>
-				<input type = "submit" id = "navbar-search-submit" name = "search-submit">
-			</form>
+			<input type = "text" placeholder = "Search by task name" name = "search" id = "navbar-search-input" required>
+			<button id = "navbar-search-submit" onclick = "searchElements()">Search</button>
 			<a id = "navbar-new-task" href = {{ url_for('new_task') }}>+ New Task</a>
 		</div>
 	</div>
@@ -24,7 +22,7 @@
 		<div class = "sidebar-container">
 		
 			<div id = "all-filter-container" class = "filter-container" >
-			<button id="filter-all" class = "filter-button active" name="filter-all" onclick="filterElements('all')">All</button>
+				<button id="filter-all" class = "filter-button active" name="filter-all" onclick="filterElements('all')">All</button>
 			</div>
 			
 			<h3>People</h3>
@@ -85,7 +83,7 @@
 	
 	<template id = "task-preview-template">
 		<button class = "task-filter" onclick ="">
-				<h2 id = "task-preview-header"></h2>
+			<h2 id = "task-preview-header"></h2>
 		</button>
 	</template>
 	
@@ -94,19 +92,38 @@
 	</template>
 	
 	<script>
-	var allTasksArray = {{ cursor }}
+	var allTasksArray = {{ cursor }};
 	<!-- title, description, assigned member, created by, priority, status-->
-	var allPeopleArray = {{ person }}
+	var allPeopleArray = {{ person }};
 	
 	function filterElements(selectedClass) {
 		var allElements, i;
-		allElements = document.getElementsByClassName("task-filter")
+		allElements = document.getElementsByClassName("task-filter");
 		if (selectedClass == "all") selectedClass = "";
 		for (i = 0; i < allElements.length; i++) {
 			elementRemoveClass(allElements[i], "show");
 			if (allElements[i].className.indexOf(selectedClass) > -1) {
 				elementAddClass(allElements[i], "show");
 			}
+		}
+	}
+	
+	function searchElements() {
+		var searchInput = document.querySelector("#navbar-search-input");
+		var searchKey = searchInput.value;
+		var allElements, i;
+		allElements = document.getElementsByClassName("task-filter");
+		for (i = 0; i < allElements.length; i++) {
+			elementRemoveClass(allElements[i], "show");
+			elementHeader = allElements[i].querySelector("#task-preview-header");
+			elementTextContent = elementHeader.textContent.toLowerCase();
+			if (elementTextContent.includes(searchKey.toLowerCase())) {
+				elementAddClass(allElements[i], "show");
+			}
+		}
+		var currentActiveButton = document.getElementsByClassName("active");
+		if (currentActiveButton[0] != null) {
+			currentActiveButton[0].className = currentActiveButton[0].className.replace(" active", "");
 		}
 	}
 	
@@ -179,7 +196,7 @@
 	}
 	
 	var peopleFilterButtonTemplate = document.querySelector("#people-filter-button-template");
-	var peopleFilterContainer = document.querySelector("#people-filter-container")
+	var peopleFilterContainer = document.querySelector("#people-filter-container");
 	
 	function loadPeopleFilterButtons() {
 		var i;
@@ -209,15 +226,16 @@
 	
 	loadTaskPreviews();
 	loadPeopleFilterButtons();
-	filterElements("all")
+	filterElements("all");
 	
 	var filterButtonsArray = document.getElementsByClassName("filter-button");
 	
 	for (var i = 0; i < filterButtonsArray.length; i++)  {
 		filterButtonsArray[i].addEventListener("click", function() {
-			console.log(this.className);
 			var currentActiveButton = document.getElementsByClassName("active");
-			currentActiveButton[0].className = currentActiveButton[0].className.replace(" active", "");
+			if (currentActiveButton[0] != null) {
+				currentActiveButton[0].className = currentActiveButton[0].className.replace(" active", "");
+			}
 			this.className += " active";
 		});
 	}
