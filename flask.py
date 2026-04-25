@@ -117,24 +117,35 @@ def people_list():
     connection = sqlite3.connect("tasks.db")
     connection.row_factory = sqlite3.Row
     cursor = connection.execute('''SELECT Name FROM People''')
-    connection.close()
-
     peoplelist = []
     for item in cursor:
         peoplelist.append(dict(item))
+        
+    connection.close()
 
     return peoplelist
+
+def people_list_list():
+    connection = sqlite3.connect("tasks.db")
+    cursor = connection.execute('''SELECT Name FROM People''')
+    peoplelist = []
+
+    for item in cursor:
+        peoplelist.append(item[0])
+
+    return peoplelist
+    
 
 def all_tasks():
     connection = sqlite3.connect("tasks.db")
     connection.row_factory = sqlite3.Row
     cursor = connection.execute('''SELECT * FROM Tasks''')
-    connection.close()
 
     filterlist = []
     for row in cursor:
         filterlist.append(dict(row))
-    
+
+    connection.close()
     return filterlist
 
 try:
@@ -194,8 +205,12 @@ def new_task():
         creator = request.form['creator']
         status = request.form['status']
 
+        cursor = all_tasks()
+        people = people_list()
+
         insert_task(name, description, peopleInvolved, creator,status)
-        return render_template("home.html")
+        return render_template("home.html", cursor = cursor, person = people)
 
     else:
-        return render_template("newtask.html")
+        data = people_list_list()
+        return render_template("newtask.html", data = data)
