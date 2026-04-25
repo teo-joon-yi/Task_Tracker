@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<title>Login - Task Tracker</title>
+<link rel = "stylesheet" href = "../static/login_style.css"> <!--{{ url_for('static', filename = "login_style.css") }}-->
+</head>
+
+<body>
+	<div class = 'login-box'>
+		<h1>Log In: </h1>
+		<form method = "POST" action = {{ url_for("home") }}>
+			<label>
+				<p>Enter your name: </p>
+				<p><input type = "text" name = "username" id = "login-input" placeholder = "Name"></p>
+				<input type = "submit"  value = "Log in"  id = "login-submit">
+			</label>
+		</form>
+	</div>	
+</body>
