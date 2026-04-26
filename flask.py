@@ -32,9 +32,12 @@ def add_people(name):
     connection.execute('''INSERT INTO People(Name) VALUES(?)''', (name,))
     connection.commit()
     connection.close()
-    return True
 
-
+def delete_person(name):
+    connection = sqlite3.connect("tasks.db")
+    connection.execute('''DELETE FROM People WHERE Name = ?''', (name,))
+    connection.commit()
+    connection.close()
 
 def insert_task(title, desc, assignedmember, createdby, status="In Progress", priority="Low"):
     connection = sqlite3.connect("tasks.db")
@@ -113,7 +116,7 @@ def delete_task(taskname):
   connection.commit()
   connection.close()
 
-def people_list():
+def people_dict():
     connection = sqlite3.connect("tasks.db")
     connection.row_factory = sqlite3.Row
     cursor = connection.execute('''SELECT Name FROM People''')
@@ -125,7 +128,7 @@ def people_list():
 
     return peoplelist
 
-def people_list_list():
+def people_list():
     connection = sqlite3.connect("tasks.db")
     cursor = connection.execute('''SELECT Name FROM People''')
     peoplelist = []
@@ -161,14 +164,13 @@ try:
 except:
     pass
 
-
 app = Flask(__name__)
 
 @app.route('/', methods = ["GET", "POST"])
 def home():
     if request.method=="GET":
         cursor = all_tasks()
-        people = people_list()
+        people = people_dict()
         return render_template("home.html", cursor = cursor, person = people)
     else: #post
         #filter submit
@@ -206,11 +208,11 @@ def new_task():
         status = request.form['status']
 
         cursor = all_tasks()
-        people = people_list()
+        people = people_dict()
 
         insert_task(name, description, peopleInvolved, creator,status)
         return render_template("home.html", cursor = cursor, person = people)
 
     else:
-        data = people_list_list()
+        data = people_list()
         return render_template("newtask.html", data = data)
