@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
 :root {
-	--background-dark: hsl(218, 45%, 73%);
-	--background-middark: hsl(221, 47%, 81%);
-	--background-middle: hsl(224, 49%, 89%);
-	--background-light: hsl(230, 55%, 95%);
+	--background-dark: hsl(96, 20%, 70%);
+	--background-middark: hsl(92, 32%, 78%);
+	--background-middle: hsl(88, 45%, 87%);
+	--background-light: hsl(84, 60%, 96%);
 	
 	--highlight: white;
-	--border: hsl(220, 30%, 50%);
-	--modal-background: hsla(220, 16%, 16%, 50%);
-	--text-colour: hsl(220, 48%, 18%);
+	--border: hsl(88, 40%, 40%);
+	--modal-background: hsla(88, 16%, 16%, 50%);
+	--text-colour: hsl(137, 28%, 18%);
 	--font: "DM Sans";
 }
 
@@ -35,7 +35,7 @@
 	background: var(--background-dark);
 }
 
-.navbar-search-container {
+.navbar-right-container {
 	display: flex;
 	flex-direction: row;
 	justify-content: right;
@@ -47,7 +47,7 @@
 	text-decoration: none;
 }
 
-#navbar-search-input, #navbar-search-submit, #navbar-new-task {
+.navbar-search-container, #navbar-new-task {
 	padding: 0.6rem;
 	
 	background-color: var(--background-middle);
@@ -57,16 +57,25 @@
 	transition: background 0.2s;
 }
 
-#navbar-search-input {
-	margin: 0rem 0.8rem;
+#navbar-search-input, #navbar-search-cancel {
+	margin: 0rem;
+	
+	font-size: 1rem;
 	font-weight: normal;
+	background-color: transparent;
+	border: none;
+	outline: none;
 }
 
-#navbar-search-submit, #navbar-new-task {
+#navbar-search-cancel {
+	font-family: sans-serif;
+}
+
+#navbar-new-task {
 	font-weight: bold;
 }
 
-#navbar-search-submit:hover, #navbar-new-task:hover, #navbar-search-input:focus {
+#navbar-new-task:hover {
 	background-color: var(--background-light);
 	outline: none;
 }
