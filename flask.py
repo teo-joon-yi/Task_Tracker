@@ -171,32 +171,41 @@ def home():
     if request.method=="GET":
         cursor = all_tasks()
         people = people_dict()
-        return render_template("home.html", cursor = cursor, person = people)
-    else: #post
+        eturn render_template("home.html", cursor = all_tasks(), person = people_dict())
+    elif: #post
         #filter submit
         status = request.form.get("status-selected")
         priority = request.form.get("priority-selected")
         person = request.form.get("person-selected")
+        taskname = request.form.get("taskname")
 
-        #delete submit
-        taskname = request.form.get("TaskName")
-        
-        
+  
         if status:
             cursor = filter_task("Status", status)
-            return render_template("home.html", cursor = cursor)
+            return render_template("home.html", cursor = cursor, person = people_dict())
 
         elif priority:
             cursor = filter_task("Priority", priority)
-            return render_template("home.html", cursor = cursor)
+            return render_template("home.html", cursor = cursor, person = people_dict())
 
         elif person:
             cursor = filter_task("AssignedMember", person)
-            return render_template("home.html", cursor = cursor)
+            return render_template("home.html", cursor = cursor, person = people_dict())
 
         elif taskname:
             delete_task(taskname)
-            return render_template("home.html")        
+            return render_template("home.html", cursor = all_tasks(), person = people_dict())
+
+    else:
+        status_update = request.form.get("taskStatusUpdate")
+        name = request.form.get("taskNameUpdate")
+        update_task(name, "Status", status_update)
+        return render_template("home.html", cursor = all_tasks(), person = people_dict())
+
+        
+        
+
+
 
 @app.route('/newtask/', methods = ["POST", "GET"])
 def new_task():
@@ -211,8 +220,11 @@ def new_task():
         people = people_dict()
 
         insert_task(name, description, peopleInvolved, creator,status)
-        return render_template("home.html", cursor = cursor, person = people)
+        eturn render_template("home.html", cursor = all_tasks(), person = people_dict())
 
     else:
         data = people_list()
         return render_template("newtask.html", data = data)
+        
+
+
