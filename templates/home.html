@@ -11,9 +11,11 @@
 
 	<div class="navbar-container">
 		<h1>Title</h1>
-		<div class = "navbar-search-container">
-			<input type = "text" placeholder = "Search by task name" name = "search" id = "navbar-search-input" required>
-			<button id = "navbar-search-submit" onclick = "searchElements()">Search</button>
+		<div class = "navbar-right-container">
+			<div class = "navbar-search-container">
+				<input type = "text" placeholder = "Search by task name" name = "search" id = "navbar-search-input" required>
+				<button id = "navbar-search-cancel" onclick = "clearSearch()">X</button>
+			</div>
 			<a id = "navbar-new-task" href = {{ url_for('new_task') }}>+ New Task</a>
 		</div>
 	</div>
@@ -120,9 +122,20 @@
 		}
 	}
 	
+	var searchInput = document.querySelector("#navbar-search-input");
+	var searchAll = document.querySelector("#filter-all");
+	searchInput.addEventListener("keyup", function (event) {
+		searchElements();
+	});
+	
 	function searchElements() {
-		var searchInput = document.querySelector("#navbar-search-input");
 		var searchKey = searchInput.value;
+		var currentActiveButton = document.getElementsByClassName("active");
+		if (currentActiveButton[0] != null) {
+			currentActiveButton[0].className = currentActiveButton[0].className.replace(" active", "");
+		}
+		if (searchKey == "") elementAddClass(searchAll,"active");
+		
 		var allElements, i;
 		allElements = document.getElementsByClassName("task-filter");
 		for (i = 0; i < allElements.length; i++) {
@@ -133,10 +146,11 @@
 				elementAddClass(allElements[i], "show");
 			}
 		}
-		var currentActiveButton = document.getElementsByClassName("active");
-		if (currentActiveButton[0] != null) {
-			currentActiveButton[0].className = currentActiveButton[0].className.replace(" active", "");
-		}
+	}
+	
+	function clearSearch() {
+		searchInput.value = "";
+		searchElements();
 	}
 	
 	function elementAddClass(element, selectedClass) {
@@ -246,6 +260,7 @@
 	
 	for (var i = 0; i < filterButtonsArray.length; i++)  {
 		filterButtonsArray[i].addEventListener("click", function() {
+			clearSearch();
 			var currentActiveButton = document.getElementsByClassName("active");
 			if (currentActiveButton[0] != null) {
 				currentActiveButton[0].className = currentActiveButton[0].className.replace(" active", "");
@@ -253,7 +268,6 @@
 			this.className += " active";
 		});
 	}
-	
 </script>
 </body>
 </html>
