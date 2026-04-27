@@ -138,7 +138,6 @@
 			currentActiveButton[0].className = currentActiveButton[0].className.replace(" active", "");
 		}
 		if (searchKey == "") elementAddClass(searchAll,"active");
-		
 		var allElements, i;
 		allElements = document.getElementsByClassName("task-filter");
 		for (i = 0; i < allElements.length; i++) {
@@ -263,7 +262,7 @@
 	
 	for (var i = 0; i < filterButtonsArray.length; i++)  {
 		filterButtonsArray[i].addEventListener("click", function() {
-			clearSearch();
+			searchInput.value = "";
 			var currentActiveButton = document.getElementsByClassName("active");
 			if (currentActiveButton[0] != null) {
 				currentActiveButton[0].className = currentActiveButton[0].className.replace(" active", "");
@@ -271,6 +270,7 @@
 			this.className += " active";
 		});
 	}
+	
 </script>
 </body>
 </html>
