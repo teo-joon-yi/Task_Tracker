@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="{{url_for('static',filename="newtaskstyle.css")}}>
+    <link rel="stylesheet" href={{url_for('static',filename="newtaskstyle.css")}}>
     <title>New Task</title>
 </head>
 <body>
   <h1>New Task</h1>
-  <form>
+  <form method = "POST" action = '/'>
     <div class="form-grid">
 
       <div class="form-group full">
