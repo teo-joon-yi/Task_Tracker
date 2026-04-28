@@ -50,64 +50,10 @@ def insert_task(title, desc, assignedmember, createdby, status="In Progress", pr
     except: #task already exists
         return False
 
-
-def filter_task(filterby, value):
+def update_task(taskname, newvalue): #e.g. if we're updating status from In Progress to complete the parameters shld be (taskname, "Status", "Complete")
     connection = sqlite3.connect("tasks.db")
-    value = value.strip().capitalize()
-    
-    if filterby=="Title":
-        cursor = connection.execute('''SELECT * FROM Tasks WHERE Title = ?''', (value,)).fetchall()
-    elif filterby=="Description":
-        cursor = connection.execute('''SELECT * FROM Tasks WHERE Description = ?''', (value,)).fetchall()
-    elif filterby == "AssignedMember":
-        cursor = connection.execute('''SELECT * FROM Tasks WHERE AssignedMember= ?''', (value,)).fetchall()
-    elif filterby == "CreatedBy":
-        cursor = connection.execute('''SELECT * FROM Tasks WHERE CreatedBy= ?''', (value,)).fetchall()
-    elif filterby == "Priority":
-        cursor = connection.execute('''SELECT * FROM Tasks WHERE Priority= ?''', (value,)).fetchall()
-    elif filterby == "Status":
-        cursor = connection.execute('''SELECT * FROM Tasks WHERE Status= ?''', (value,)).fetchall()
-    connection.close()
-    
-    filterlist = []
-    for tup in cursor:
-        tuplist = []
-        for item in tup:
-            tuplist.append(item)
-        filterlist.append(tuplist)
-    
-    return filterlist
-
-def update_task(taskname, updateby, newvalue): #e.g. if we're updating status from In Progress to complete the parameters shld be (taskname, "Status", "Complete")
-    connection = sqlite3.connect("tasks.db")
-    newvalue = newvalue.strip().capitalize()
-    
-    if updateby=="Title":
-        connection.execute('''UPDATE Tasks SET Title = ? WHERE Title = ?''', (newvalue, taskname))
-        connection.commit()
-        return True
-    elif updateby=="Description":
-        connection.execute('''UPDATE Tasks SET Description = ? WHERE Title = ?''', (newvalue, taskname))
-        connection.commit()
-        return True
-    elif updateby == "AssignedMember":
-        connection.execute('''UPDATE Tasks SET AssignedMember = ? WHERE Title = ?''', (newvalue, taskname))
-        connection.commit()
-        return True
-    elif updateby == "CreatedBy":
-        connection.execute('''UPDATE Tasks SET CreatedBy = ? WHERE Title = ?''', (newvalue, taskname))
-        connection.commit()
-        return True
-    elif updateby == "Priority":
-        connection.execute('''UPDATE Tasks SET Priority = ? WHERE Title = ?''', (newvalue, taskname))
-        connection.commit()
-        return True
-    elif updateby == "Status":
-        connection.execute('''UPDATE Tasks SET Status = ? WHERE Title = ?''', (newvalue, taskname))
-        connection.commit()
-        return True
-    else:
-        return False
+    connection.execute('''UPDATE Tasks SET Status = ? WHERE Title = ?''', (newvalue, taskname))
+    connection.commit()
     connection.close()
     
 def delete_task(taskname):
@@ -171,60 +117,55 @@ def home():
     if request.method=="GET":
         cursor = all_tasks()
         people = people_dict()
-        eturn render_template("home.html", cursor = all_tasks(), person = people_dict())
-    elif: #post
-        #filter submit
-        status = request.form.get("status-selected")
-        priority = request.form.get("priority-selected")
-        person = request.form.get("person-selected")
-        taskname = request.form.get("taskname")
+        return render_template("home.html", cursor = cursor, person = people)
+    else: #post
+        #delete task
+        taskname = request.form.get("taskNameDelete")
 
-  
-        if status:
-            cursor = filter_task("Status", status)
-            return render_template("home.html", cursor = cursor, person = people_dict())
+        #new task
+        newname = request.form.get('name')     
+        description = request.form.get('description')
+        peopleInvolved = request.form.get('peopleInvolved')
+        creator = request.form.get('creator')
+        status = request.form.get('status')
 
-        elif priority:
-            cursor = filter_task("Priority", priority)
-            return render_template("home.html", cursor = cursor, person = people_dict())
-
-        elif person:
-            cursor = filter_task("AssignedMember", person)
-            return render_template("home.html", cursor = cursor, person = people_dict())
-
-        elif taskname:
-            delete_task(taskname)
-            return render_template("home.html", cursor = all_tasks(), person = people_dict())
-
-    else:
+        #update task
         status_update = request.form.get("taskStatusUpdate")
         name = request.form.get("taskNameUpdate")
-        update_task(name, "Status", status_update)
-        return render_template("home.html", cursor = all_tasks(), person = people_dict())
 
-        
-        
-
-
-
-@app.route('/newtask/', methods = ["POST", "GET"])
-def new_task():
-    if request.method == 'POST':    
-        name = request.form['name']     
-        description = request.form['description']
-        peopleInvolved = request.form['peopleInvolved']
-        creator = request.form['creator']
-        status = request.form['status']
+        #login
+        username = request.form.get("username")
 
         cursor = all_tasks()
         people = people_dict()
-
-        insert_task(name, description, peopleInvolved, creator,status)
-        eturn render_template("home.html", cursor = all_tasks(), person = people_dict())
-
-    else:
-        data = people_list()
-        return render_template("newtask.html", data = data)
         
+        if taskname:
+            delete_task(taskname)
+            return render_template("home.html", cursor = all_tasks(), person = people_dict())
 
+        elif newname:
+            insert_task(newname, description, peopleInvolved, creator,status)
+            return render_template("home.html", cursor = all_tasks(), person = people_dict())
+        
+        elif status_update:
+            update_task(name, "Status", status_update)
+            return render_template("home.html", cursor = all_tasks(), person = people_dict())
 
+        elif username:
+            peoplelist = people_list()
+            if username not in peoplelist:
+                add_people(username)
+
+            return render_template("home.html", cursor = all_tasks(), person = people_dict())
+
+@app.route('/newtask/')
+def new_task():
+    data = people_list()
+    return render_template("newtask.html", data = data)
+
+@app.route('/login/')
+def new_person():
+    return render_template("login.html")
+
+if __name__ == '__main__':
+    app.run()
