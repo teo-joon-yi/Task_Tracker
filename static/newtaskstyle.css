@@ -1,12 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+:root {
+	--background-dark: linear-gradient(90deg, hsl(125, 28%, 60%), hsl(135, 35%, 63%));
+	--background-middark: hsl(125, 28%, 70%);
+	--background-middle: hsl(120, 35%, 84%);
+	--background-light: hsl(110, 60%, 96%);
+	
+	--highlight: white;
+	--border: hsl(120, 40%, 40%);
+	--modal-background: hsla(120, 16%, 16%, 50%);
+	--text-colour: hsl(120, 28%, 18%);
+	--font: "DM Sans";
+}
+
+* {
+	font-family: var(--font);
+	color: var(--text-colour);
+}
 body {
-  background-color: #EBF5DF;
+  background: var(--background-middle);
   margin: 0;
   padding: 24px;
   font-family: sans-serif;
 }
 
 h1 {
-  background: #A7B899;
+  background: var(--background-dark);
   padding: 0 24px;
   padding-left: 24px;
   margin: 0;
@@ -46,7 +65,6 @@ label.field-label {
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #888;
 }
 
 input[type="text"],
@@ -57,7 +75,7 @@ select {
   font-size: 14px;
   width: 100%;
   box-sizing: border-box;
-  background: #fff;
+  background: var(--highlight);
 }
 
 input[type="text"]:focus,
@@ -67,11 +85,8 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
 }
 
-
-
 button[type="submit"] {
-  background: #111;
-  color: #fff;
+  background: var(--background-dark);
   border: none;
   border-radius: 8px;
   padding: 10px 28px;
@@ -81,8 +96,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover{
-  background:#fff;
-  color:#111;
+  background: var(--background-middark);
 }
 
 textarea {
