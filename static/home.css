@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
 :root {
-	--background-dark: hsl(96, 20%, 70%);
-	--background-middark: hsl(92, 32%, 78%);
-	--background-middle: hsl(88, 45%, 87%);
-	--background-light: hsl(84, 60%, 96%);
+	--background-dark: linear-gradient(90deg, hsl(125, 28%, 60%), hsl(135, 35%, 63%));
+	--background-middark: hsl(125, 28%, 70%);
+	--background-middle: hsl(120, 35%, 84%);
+	--background-light: hsl(110, 60%, 96%);
 	
 	--highlight: white;
-	--border: hsl(88, 40%, 40%);
-	--modal-background: hsla(88, 16%, 16%, 50%);
-	--text-colour: hsl(137, 28%, 18%);
+	--border: hsl(120, 40%, 40%);
+	--modal-background: hsla(120, 16%, 16%, 50%);
+	--text-colour: hsl(120, 28%, 18%);
 	--font: "DM Sans";
 }
 
@@ -45,7 +45,7 @@
 .navbar-search-container, #navbar-new-task {
 	padding: 0.6rem;
 	
-	background-color: var(--background-middle);
+	background: var(--background-middle);
 	border: 2px solid var(--border);
 	border-radius: 8px;
 	font-size: 1rem;
@@ -57,7 +57,7 @@
 	
 	font-size: 1rem;
 	font-weight: normal;
-	background-color: transparent;
+	background: transparent;
 	border: none;
 	outline: none;
 }
@@ -73,7 +73,7 @@
 }
 
 #navbar-new-task:hover {
-	background-color: var(--background-light);
+	background: var(--background-light);
 	outline: none;
 }
 
@@ -120,14 +120,14 @@
 	font-size: 0.85rem;
 	text-decoration: none;
 	text-align: center;
-	background-color: var(--background-middle);
+	background: var(--background-middle);
 	border: 2px solid var(--border);
 	border-radius: 8px;
 	transition: background 0.2s, transform 0.2s;
 }
 
 #sidebar-new-person:hover {
-	background-color: var(--background-middark);
+	background: var(--background-middark);
 	transform: scale(1.04);
 }
 
@@ -135,20 +135,20 @@
 	margin: 0.2rem 1.5rem;
 	padding: 0.4rem;
 	
-	background-color: var(--background-light);
+	background: var(--background-light);
 	border: none;
 	border-radius: 8px;
 	transition: background 0.2s, transform 0.2s;
 }
 
 .filter-button:hover {
-	background-color: var(--background-middark);
+	background: var(--background-middark);
 	transform: scale(1.04);
 }
 
 .active {
 	font-weight: bold;
-	background-color: var(--background-middark) !important;
+	background: var(--background-middark) !important;
 	transform: scale(1.04);
 }
 
@@ -240,7 +240,7 @@
 #task-details-delete-button, #task-details-update-button {
 	padding: 0.5rem 1rem;
 	
-	background-color: var(--background-middark);
+	background: var(--background-middark);
 	border: none;
 	border-radius: 8px;
 	transition: background 0.2s, transform 0.2s;
@@ -248,7 +248,7 @@
 }
 
 #task-details-delete-button:hover, #task-details-update-button:hover {
-	background-color: var(--background-dark);
+	background: var(--background-dark);
 	transform: scale(1.04);
 }
 
@@ -261,7 +261,7 @@
 	margin: 0.2rem;
 	
 	font-size: 1rem;
-	background-color: var(--background-middle);
+	background: var(--background-middle);
 	border: 2px solid var(--border);
 	border-radius: 8px;
 }
@@ -288,7 +288,7 @@ h3 {
 hr {
 	height: 1px;
 	border-color: transparent;
-	background-color: var(--border);
+	background: var(--border);
 }
 
 ::-webkit-scrollbar {
