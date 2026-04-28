@@ -148,7 +148,7 @@ def home():
             return render_template("home.html", cursor = all_tasks(), person = people_dict())
         
         elif status_update:
-            update_task(name, "Status", status_update)
+            update_task(name, status_update)
             return render_template("home.html", cursor = all_tasks(), person = people_dict())
 
         elif username:
