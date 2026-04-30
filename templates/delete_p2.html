@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Remove person - Reassign Tasks - Grow a Business</title>
-	<link rel = "stylesheet" href = "../static/login_style.css"> <!--{{ url_for("static", filename = "login.css") }}-->
+	<link rel = "stylesheet" href = {{ url_for('static', filename = "login_style.css") }}> 
 </head>
 <body>
 	<h2>{{ name }} is currently assigned to the following tasks: </h2>
