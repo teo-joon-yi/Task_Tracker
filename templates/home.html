@@ -32,7 +32,7 @@
 			<div id = "new-people-container" class = "filter-container">
 				<a id = "sidebar-new-person" href = {{ url_for('new_person') }}>+ New person</a>
 				<a id = "sidebar-remove-person" href = "">- Remove Person</a>
-				<!-- Replace "" above with {{ url_for('remove') }} once flask is updated -->
+				<!-- {% raw %} Replace "" above with {{ url_for('remove') }} once flask is updated {% endraw %} -->
 			</div>
 			
 			<h3>Status</h3>
