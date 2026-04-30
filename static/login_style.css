@@ -53,6 +53,15 @@ body{
 	background: var(--background-middle)
 }
 
-#login-submit:hover{
+#delete-submit{
+	height: 50px;
+	width: 200px;
+	
+	border-radius: 5px;
+	border: 2px solid var(--border);
+	background: var(--background-middle);
+}
+
+#login-submit:hover, #delete-submit:hover {
 	background: var(--background-middark)
 }
