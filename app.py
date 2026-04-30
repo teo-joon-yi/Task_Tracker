@@ -41,7 +41,7 @@ def insert_task(title, desc, assignedmember, createdby, status="In Progress", pr
     connection = sqlite3.connect("tasks.db")
     try:
         connection.execute('''INSERT INTO Tasks(Title, Description, AssignedMember, CreatedBy, Priority, Status)
-        VALUES(?,?,?,?,?,?)''', (title.strip().capitalize(), desc, assignedmember.strip().capitalize(), createdby.strip().capitalize(), priority, status))
+        VALUES(?,?,?,?,?,?)''', (title.strip().capitalize(), desc, assignedmember, createdby, priority, status))
         connection.commit()
         connection.close()
         return True
@@ -97,6 +97,22 @@ def all_tasks():
     connection.close()
     return filterlist
 
+def person_tasks(name):
+    connection = sqlite3.connect("tasks.db")
+    cursor = connection.execute('''SELECT * FROM Tasks WHERE AssignedMember = ? AND Status != "Completed"''', (name, )).fetchall()
+
+    if cursor == []:
+        return False
+    else:
+        return cursor
+    connection.close()
+
+def reassign_task(taskname, newperson):
+    connection = sqlite3.connect("tasks.db")
+    connection.execute('''UPDATE Tasks SET AssignedMember = ? WHERE Title = ?''', (newperson, taskname))
+    connection.commit()
+    connection.close()
+
 try:
     add_people("Joon Yi")
     add_people("Rae Lynn")
@@ -134,11 +150,11 @@ def home():
         status_update = request.form.get("taskStatusUpdate")
         name = request.form.get("taskNameUpdate")
 
-        #login
+        #add person
         username = request.form.get("username")
 
-        cursor = all_tasks()
-        people = people_dict()
+        #remove person
+        remove = request.form.get("delete")
         
         if taskname:
             delete_task(taskname)
@@ -159,6 +175,9 @@ def home():
 
             return render_template("home.html", cursor = all_tasks(), person = people_dict())
 
+        elif delete:
+            return render_template("home.html", cursor = all_tasks(), person = people_dict())
+            
 @app.route('/newtask/')
 def new_task():
     data = people_list()
@@ -167,6 +186,42 @@ def new_task():
 @app.route('/login/')
 def new_person():
     return render_template("login.html")
+
+@app.route('/remove/', methods = ['GET', 'POST'])
+def remove():
+    if request.method == "GET":
+        return render_template("delete_p1.html", data = people_list())
+    
+    else: #post, retrieve second page or third page accordingly
+        #post method from page 1
+        try:
+            name = request.form['removePerson']
+            tasks = person_tasks(name)
+
+            delete_person(name)
+            
+            if person_tasks(name) == False: 
+                return render_template("delete_p3.html", name = name)
+            else:
+                return render_template("delete_p2.html", name = name, tasks = tasks, data = people_list()) #if tasks associated with person, render page2
+        
+        #post method from page 2
+        except:
+            name = request.form['deletedName']
+            persontasks = person_tasks(name)
+
+            for task in persontasks:
+                requestname = "change-"+str(task[0])
+                value = request.form[requestname]
+
+                if value == "delete":
+                    delete_task(task[0])
+                else: #reassign
+                    newname = value[9:]
+                    print(task[0], newname, "reassigned:")
+                    reassign_task(task[0], newname)             
+            
+            return render_template("delete_p3.html", name = name)
 
 if __name__ == '__main__':
     app.run()
