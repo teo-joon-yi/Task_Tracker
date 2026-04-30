@@ -48,6 +48,7 @@ def insert_task(title, desc, assignedmember, createdby, status="In Progress", pr
         connection.close()
         return True
     except: #task already exists
+        connection.close()
         return False
 
 def update_task(taskname, newvalue): #e.g. if we're updating status from In Progress to complete the parameters shld be (taskname, "Status", "Complete")
@@ -82,6 +83,7 @@ def people_list():
     for item in cursor:
         peoplelist.append(item[0])
 
+    connection.close()
     return peoplelist
     
 
