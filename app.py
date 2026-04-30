@@ -175,7 +175,7 @@ def home():
 
             return render_template("home.html", cursor = all_tasks(), person = people_dict())
 
-        elif delete:
+        elif remove:
             return render_template("home.html", cursor = all_tasks(), person = people_dict())
             
 @app.route('/newtask/')
