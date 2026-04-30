@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+	<title> Remove person - Grow a Business </title>
+	<link rel = "stylesheet" href = "../static/login_style.css"> <!--{{ url_for("static", filename = "login.css") }}-->
+</head>
+<body>
+	<div class = 'login-box'>
+		<h1> Remove person</h1>
+		<form action = '/remove/' method = "POST">
+			<label>
+				<p>Select the person to be removed: </p>
+				<select name = "removePerson">
+					{%for person in data%}
+					<option>{{ person }}</option>
+					{%endfor%}
+				</select>
+				<input type = "submit" value = "Next">
+			</label>
+		</form>
+	</div>
+</body>
+</html>

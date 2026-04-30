@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+	<title>Remove Person - Successful - Grow a Business</title>
+	<link rel = "stylesheet" href = "../static/login_style.css">
+<head>
+<body>
+	<div class = "login-box">
+		<h1>{{ name }} successfully removed<h1>
+		<label>
+			<form method = "POST" action = {{ url_for('home') }}>
+				<input id = "delete-submit" type = "submit" name = "delete" value = "Go Back to Home Page">
+			</form>
+		</label>
+	</div>
+</body>
+</html>

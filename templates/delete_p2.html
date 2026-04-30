@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<title>Remove person - Reassign Tasks - Grow a Business</title>
+	<link rel = "stylesheet" href = "../static/login_style.css"> <!--{{ url_for("static", filename = "login.css") }}-->
+</head>
+<body>
+	<h2>{{ name }} is currently assigned to the following tasks: </h2>
+	<table>
+		<tr>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Assigned Member</th>
+			<th>Created By</th>
+			<th>Priority</th>
+			<th>Status</th>
+		</tr>
+		{%for task in tasks%}
+			<tr>
+				{%for field in task%}
+					<td>{{ field }}</td>
+				{%endfor%}
+			</tr>
+		{%endfor%}
+	</table>
+	<br>
+	<p>What would you like to do with these tasks: </p>
+	<form method = "POST" action = "/remove">
+		{%for task in tasks%}
+			<label>
+				<p>{{ task[0] }}</p>
+				<select name = "change-{{ task[0] }}">
+					{%for person in data%}
+						<option value = "reassign-{{ person }}">Reassign task to {{ person }}</option>
+					{%endfor%}
+					<option value = "delete">Delete task</option>
+				</select>
+			</label>
+		{%endfor%}
+		<input type = "submit" value = "Next">
+		<input name = "deletedName" value = "{{ name }}">
+	</form>
+</body>
+</html>
