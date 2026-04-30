@@ -13,9 +13,7 @@ Priority TEXT,
 Status TEXT,
 
 PRIMARY KEY(Title),
-FOREIGN KEY(AssignedMember) REFERENCES People(Name),
-FOREIGN KEY(CreatedBy) REFERENCES People(Name)
-
+FOREIGN KEY(AssignedMember) REFERENCES People(Name)
 )''')
 
 #create people table
@@ -130,6 +128,7 @@ def home():
         peopleInvolved = request.form.get('peopleInvolved')
         creator = request.form.get('creator')
         status = request.form.get('status')
+        priority = request.form.get('priority')
 
         #update task
         status_update = request.form.get("taskStatusUpdate")
@@ -146,7 +145,7 @@ def home():
             return render_template("home.html", cursor = all_tasks(), person = people_dict())
 
         elif newname:
-            insert_task(newname, description, peopleInvolved, creator,status)
+            insert_task(newname, description, peopleInvolved, creator, status, priority)
             return render_template("home.html", cursor = all_tasks(), person = people_dict())
         
         elif status_update:
