@@ -218,7 +218,6 @@ def remove():
                     delete_task(task[0])
                 else: #reassign
                     newname = value[9:]
-                    print(task[0], newname, "reassigned:")
                     reassign_task(task[0], newname)             
             
             return render_template("delete_p3.html", name = name)
