@@ -111,12 +111,19 @@ textarea {
 }
 
 .btn {
-	background: var(--background-dark);
+  background-color: black;
+  color:white;
   border: none;
   border-radius: 8px;
   padding: 10px 28px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  padding-left: 24px;
+  text-decoration: none;
+  margin-left:24px;
 }
-	
+
+.btn:hover {
+  background-color: #222;
+}
