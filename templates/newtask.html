@@ -38,6 +38,15 @@
       </div>
 
       <div class="form-group full">
+        <label class="field-label">Priority</label>
+        <select name="priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+      </div>
+
+      <div class="form-group full">
         <label class="field-label">Created by</label>
         <select name="creator">
           {% for person in data %}
