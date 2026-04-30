@@ -271,6 +271,11 @@
 }
 
 /*Misc*/
+
+p {
+	margin: 0.2rem 0rem;
+}
+
 h1 {
 	margin: 0rem 1rem;
 	padding: 1rem;
