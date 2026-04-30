@@ -112,7 +112,7 @@
 	flex-direction: column;
 }
 
-#sidebar-new-person {
+#sidebar-new-person, #sidebar-remove-person {
 	display: block;
 	padding: 0.4rem;
 	margin: 0.2rem 1.5rem;
@@ -126,7 +126,7 @@
 	transition: background 0.2s, transform 0.2s;
 }
 
-#sidebar-new-person:hover {
+#sidebar-new-person:hover, #sidebar-remove-person:hover {
 	background: var(--background-middark);
 	transform: scale(1.04);
 }
