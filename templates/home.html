@@ -103,6 +103,7 @@
 	<template id = "task-preview-template">
 		<button class = "task-filter" onclick ="">
 			<h2 id = "task-preview-header"></h2>
+			<span class = "task-preview-priority-indicator" id = "task-preview-priority-indicator">●</span>
 		</button>
 	</template>
 	
@@ -220,6 +221,11 @@
 			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i]["AssignedMember"]));
 			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i]["Priority"]));
 			elementAddClass(taskPreviewCard, convertToClassName(allTasksArray[i]["Status"]));
+			
+			const taskPreviewPriority = taskPreviewCard.querySelector("#task-preview-priority-indicator");
+			var taskPreviewPriorityClass = "task-preview-priority-";
+			taskPreviewPriorityClass += convertToClassName(allTasksArray[i]["Priority"]);
+			elementAddClass(taskPreviewPriority, taskPreviewPriorityClass);
 			
 			taskPreviewCard.setAttribute("onclick", "openTaskDetails(" + i + ")");
 			taskPreviewCardHeader.textContent = allTasksArray[i]["Title"];
