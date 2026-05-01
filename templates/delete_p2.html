@@ -29,7 +29,7 @@
 		{%for task in tasks%}
 			<label>
 				<p>{{ task[0] }}</p>
-				<select name = "change-{{ task[0] }}">
+				<select name = "change-{{ task[0] }}" class = "reassign-dropdown">
 					{%for person in data%}
 						<option value = "reassign-{{ person }}">Reassign task to {{ person }}</option>
 					{%endfor%}
@@ -37,8 +37,9 @@
 				</select>
 			</label>
 		{%endfor%}
-		<input type = "submit" value = "Next">
-		<input name = "deletedName" value = "{{ name }}">
+		<br>
+		<p><input type = "submit" value = "Next" class = "next-button"></p>
+		<input name = "deletedName" value = "{{ name }}" id = "hidden-name">
 	</form>
 </body>
 </html>
