@@ -10,12 +10,13 @@
 		<form action = '/remove/' method = "POST">
 			<label>
 				<p>Select the person to be removed: </p>
-				<select name = "removePerson">
+				<select name = "removePerson" class = "reassign-dropdown">
 					{%for person in data%}
 					<option>{{ person }}</option>
 					{%endfor%}
 				</select>
-				<input type = "submit" value = "Next">
+				<br>
+				<p><input type = "submit" value = "Next" class = "next-button"></p>
 			</label>
 		</form>
 	</div>
