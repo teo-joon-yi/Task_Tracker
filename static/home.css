@@ -13,8 +13,8 @@
 	--font: "DM Sans";
 	
 	--priority-low: var(--background-middark);
-	--priority-medium: hsl(37, 82%, 61%);
-	--priority-high: hsl(0, 70%, 65%);
+	--priority-medium: hsl(37, 80%, 65%);
+	--priority-high: hsl(0, 65%, 70%);
 }
 
 * {
