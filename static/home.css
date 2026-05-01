@@ -11,6 +11,10 @@
 	--modal-background: hsla(120, 16%, 16%, 50%);
 	--text-colour: hsl(120, 28%, 18%);
 	--font: "DM Sans";
+	
+	--priority-low: var(--background-middark);
+	--priority-medium: hsl(37, 82%, 61%);
+	--priority-high: hsl(0, 70%, 65%);
 }
 
 * {
@@ -170,6 +174,25 @@
 	box-sizing: border-box;
 }
 
+#task-preview-priority-indicator {
+	position: absolute;
+	top: -0.3rem;
+	right: 0.6rem;
+	font-size: 2rem;
+}
+
+.task-preview-priority-low {
+	color: var(--priority-low);
+}
+
+.task-preview-priority-medium {
+	color: var(--priority-medium);
+}
+
+.task-preview-priority-high {
+	color: var(--priority-high);
+}
+
 .task-filter {
 	width: 30%;
 	min-width: 240px;
@@ -189,6 +212,7 @@
 
 .show {
 	display: block;
+	position: relative;
 }
 
 /*Task Details Popup*/
