@@ -197,30 +197,34 @@ def remove():
         try:
             name = request.form['removePerson']
             tasks = person_tasks(name)
-
-            delete_person(name)
-            
-            if person_tasks(name) == False: 
+ 
+            if person_tasks(name) == False:
+                delete_person(name)
                 return render_template("delete_p3.html", name = name)
             else:
                 return render_template("delete_p2.html", name = name, tasks = tasks, data = people_list()) #if tasks associated with person, render page2
         
         #post method from page 2
         except:
-            name = request.form['deletedName']
-            persontasks = person_tasks(name)
+            try: #previous button
+                request.form['previous']
+                return render_template("delete_p1.html", data = people_list())
+            except: #next button
+                name = request.form['deletedName']
+                delete_person(name)
+                persontasks = person_tasks(name)
 
-            for task in persontasks:
-                requestname = "change-"+str(task[0])
-                value = request.form[requestname]
+                for task in persontasks:
+                    requestname = "change-"+str(task[0])
+                    value = request.form[requestname]
 
-                if value == "delete":
-                    delete_task(task[0])
-                else: #reassign
-                    newname = value[9:]
-                    reassign_task(task[0], newname)             
-            
-            return render_template("delete_p3.html", name = name)
-
+                    if value == "delete":
+                        delete_task(task[0])
+                    else: #reassign
+                        newname = value[9:]
+                        reassign_task(task[0], newname)             
+                
+                return render_template("delete_p3.html", name = name)
+                
 if __name__ == '__main__':
     app.run()
