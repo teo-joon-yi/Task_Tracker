@@ -39,7 +39,10 @@
 				</label>
 			{%endfor%}
 			<br>
-			<p><input type = "submit" value = "Next" class = "next-button"></p>
+			<p>
+				<input type = "submit" value = "Previous" class = "previous-button" name = "previous">
+				<input type = "submit" value = "Next" class = "next-button" name = "next">
+			</p>
 			<input name = "deletedName" value = "{{ name }}" id = "hidden-name">
 		</form>
 	</div>
