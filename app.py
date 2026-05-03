@@ -120,9 +120,9 @@ try:
     add_people("Josephine")
     add_people("Mr Lai")
     
-    insert_task("Buy ingredients", "buy flour, eggs and sugar", "Joon Yi", "Mr Lai", "Medium", "Not Started")
-    insert_task("Bake cookies", "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/ link to cookie recipe", "Rae Lynn", "Deeksha", "High", "Completed")
-    insert_task("Clean up", "clean up workspace after baking cookies", "Josephine", "Mr Lai", "Low", "In Progress")
+    insert_task("Buy ingredients", "buy flour, eggs and sugar", "Joon Yi", "Mr Lai",  "Not Started", "Medium")
+    insert_task("Bake cookies", "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/ link to cookie recipe", "Rae Lynn", "Deeksha", "Completed", "High")
+    insert_task("Clean up", "clean up workspace after baking cookies", "Josephine", "Mr Lai", "In Progress", "Low")
 except:
     pass
 
