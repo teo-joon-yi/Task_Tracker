@@ -120,9 +120,9 @@ try:
     add_people("Josephine")
     add_people("Mr Lai")
     
-    insert_task("Buy ingredients", "buy flour, eggs and sugar", "Joon Yi", "Mr Lai")
-    insert_task("Bake cookies", "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/ link to cookie recipe", "Rae Lynn", "Deeksha")
-    insert_task("Clean up", "clean up workspace after baking cookies", "Josephine", "Mr Lai")
+    insert_task("Buy ingredients", "buy flour, eggs and sugar", "Joon Yi", "Mr Lai", "Medium", "Not Started")
+    insert_task("Bake cookies", "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/ link to cookie recipe", "Rae Lynn", "Deeksha", "High", "Completed")
+    insert_task("Clean up", "clean up workspace after baking cookies", "Josephine", "Mr Lai", "Low", "In Progress")
 except:
     pass
 
@@ -202,7 +202,12 @@ def remove():
                 delete_person(name)
                 return render_template("delete_p3.html", name = name)
             else:
-                return render_template("delete_p2.html", name = name, tasks = tasks, data = people_list()) #if tasks associated with person, render page2
+                data = people_list()
+                updated_data=[]
+                for person in data:
+                    if person!=name:
+                        updated_data.append(person)
+                return render_template("delete_p2.html", name = name, tasks = tasks, data = updated_data) #if tasks associated with person, render page2
         
         #post method from page 2
         except:
