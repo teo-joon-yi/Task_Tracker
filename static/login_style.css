@@ -76,14 +76,25 @@ th, td{
 	width: 170px;
 }
 
-#login-submit, .next-button{
+#login-submit, .next-button, .previous-button{
 	height: 30px;
 	width: 80px;
 	
 	border-radius: 3px;
 	border: 1px solid var(--border);
 	background: var(--background-middle);
-	margin-top: 8px;
+	margin-top: 13px;
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.previous-button{
+	border-color: #777;
+	background: rgb(200,200,200);
+}
+
+.previous-button:hover{
+	background: rgb(175, 175, 175);
 }
 
 #delete-submit{
@@ -95,7 +106,7 @@ th, td{
 	background: var(--background-middle);
 }
 
-#login-submit:hover, #delete-submit:hover {
+#login-submit:hover, #delete-submit:hover, .next-button:hover {
 	background: var(--background-middark)
 }
 
@@ -112,3 +123,32 @@ th, td{
 	font-size: 14px;
 
 }
+
+.back-box{
+	background-color: black;
+	color: white;
+	border-radius: 8px;
+	
+	margin-top: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	
+	width: 90px;
+	height: 34px;
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.back-text{
+	text-decoration: none;
+	color: white;
+	font-size: 14px;
+}
+
+.back-box:hover {
+  background-color: #333;
+}
+
